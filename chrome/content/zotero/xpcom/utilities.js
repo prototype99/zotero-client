@@ -1447,11 +1447,8 @@ Zotero.Utilities = {
 			return header + ': ' + msg;
 		}
 		
-		// Only dump single level for nsIDOMNode objects (including document)
-		if (Zotero.isFx && !Zotero.isBookmarklet
-			&& (obj instanceof Components.interfaces.nsIDOMNode
-				|| obj instanceof Components.interfaces.nsIDOMWindow)
-		) {
+		// Only dump single level for Node objects (including document)
+		if (Zotero.isFx && !Zotero.isBookmarklet && (obj instanceof Node || obj instanceof Window)) {
 			level = maxLevel;
 		}
 		
