@@ -394,14 +394,12 @@ var Zotero_RTFScan = new function() {
 		var tree = document.getElementById("tree");
 		
 		// get clicked cell
-		var row = { }, col = { }, child = { };
-		tree.treeBoxObject.getCellAt(event.clientX, event.clientY, row, col, child);
+		var { row, col } = tree.getCellAt(event.clientX, event.clientY);
 		
 		// figure out which item this corresponds to
-		row = row.value;
 		var level = tree.view.getLevel(row);
-		if(col.value.index == 2 && level > 0) {
-			var iconColumn = col.value;
+		if (col.index == 2 && level > 0) {
+			let iconColumn = col;
 			var itemNameColumn = iconColumn.getPrevious();
 			var citationColumn = itemNameColumn.getPrevious();
 			

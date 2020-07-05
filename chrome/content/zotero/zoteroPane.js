@@ -3174,23 +3174,22 @@ var ZoteroPane = new function()
 		var tree = t.parentNode;
 		
 		// Ignore click on column headers
-		if (!tree.treeBoxObject) {
+		if (!tree) {
 			return;
 		}
 		
-		var row = {}, col = {}, obj = {};
-		tree.treeBoxObject.getCellAt(event.clientX, event.clientY, row, col, obj);
-		if (row.value == -1) {
+		let { col, row } = tree.getCellAt(event.clientX, event.clientY);
+		if (row == -1) {
 			return;
 		}
 		
 		if (tree.id == 'zotero-collections-tree') {
-			let collectionTreeRow = ZoteroPane_Local.collectionsView.getRow(row.value);
+			let collectionTreeRow = ZoteroPane_Local.collectionsView.getRow(row);
 			
 			// Prevent the tree's select event from being called for a click
 			// on a library sync error icon
 			if (collectionTreeRow.isLibrary(true)) {
-				if (col.value.id == 'zotero-collections-sync-status-column') {
+				if (col.id == 'zotero-collections-sync-status-column') {
 					var errors = Zotero.Sync.Runner.getErrors(collectionTreeRow.ref.libraryID);
 					if (errors) {
 						event.stopPropagation();
@@ -3220,16 +3219,15 @@ var ZoteroPane = new function()
 				
 				var tree = t.parentNode;
 				
-				var row = {}, col = {}, obj = {};
-				tree.treeBoxObject.getCellAt(event.clientX, event.clientY, row, col, obj);
+				let { row, childElt } = tree.getCellAt(event.clientX, event.clientY);
 				
-				// obj.value == 'cell'/'text'/'image'/'twisty'
-				if (!obj.value) {
+				// 'cell'/'text'/'image'/'twisty'
+				if (!childElt) {
 					return;
 				}
 				
 				// Duplicated in itemTreeView.js::notify()
-				var itemID = ZoteroPane_Local.itemsView.getRow(row.value).ref.id;
+				var itemID = ZoteroPane_Local.itemsView.getRow(row).ref.id;
 				var setItemIDs = collectionTreeRow.ref.getSetItemsByItemID(itemID);
 				ZoteroPane_Local.itemsView.selectItems(setItemIDs);
 				
@@ -3251,22 +3249,21 @@ var ZoteroPane = new function()
 		
 		var tree = t.parentNode;
 		
-		var row = {}, col = {}, obj = {};
-		tree.treeBoxObject.getCellAt(event.clientX, event.clientY, row, col, obj);
+		var { col, row, childElt } = tree.getCellAt(event.clientX, event.clientY);
 		
 		// We care only about primary-button double and triple clicks
 		if (!event || (event.detail != 2 && event.detail != 3) || event.button != 0) {
-			if (row.value == -1) {
+			if (row == -1) {
 				return;
 			}
 			
 			if (tree.id == 'zotero-collections-tree') {
-				let collectionTreeRow = ZoteroPane_Local.collectionsView.getRow(row.value);
+				let collectionTreeRow = ZoteroPane_Local.collectionsView.getRow(row);
 				
 				// Show the error panel when clicking a library-specific
 				// sync error icon
 				if (collectionTreeRow.isLibrary(true)) {
-					if (col.value.id == 'zotero-collections-sync-status-column') {
+					if (col.id == 'zotero-collections-sync-status-column') {
 						var errors = Zotero.Sync.Runner.getErrors(collectionTreeRow.ref.libraryID);
 						if (!errors) {
 							return;
@@ -3276,11 +3273,12 @@ var ZoteroPane = new function()
 						
 						var anchor = document.getElementById('zotero-collections-tree-shim');
 						
-						var x = {}, y = {}, width = {}, height = {};
-						tree.treeBoxObject.getCoordsForCellItem(row.value, col.value, 'image', x, y, width, height);
+						let { x, y, width, height } = tree.getCoordsForCellItem(
+							row.value, col.value, 'image'
+						);
 						
-						x = x.value + Math.round(width.value / 2);
-						y = y.value + height.value + 3;
+						x += Math.round(width / 2);
+						y += height + 3;
 						
 						panel.openPopup(anchor, "after_start", x, y, false, false);
 					}
@@ -3301,7 +3299,7 @@ var ZoteroPane = new function()
 						return;
 					}
 					
-					if (obj.value == 'twisty') {
+					if (childElt == 'twisty') {
 						return;
 					}
 					
@@ -3326,7 +3324,7 @@ var ZoteroPane = new function()
 		}
 		
 		// obj.value == 'cell'/'text'/'image'
-		if (!obj.value) {
+		if (!childElt) {
 			return;
 		}
 		

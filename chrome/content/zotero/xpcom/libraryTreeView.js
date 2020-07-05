@@ -364,8 +364,7 @@ Zotero.LibraryTreeView.prototype = {
 			}
 		}
 		var tree = target.parentNode;
-		let row = {}, col = {}, obj = {};
-		tree.treeBoxObject.getCellAt(event.clientX, event.clientY, row, col, obj);
+		var { row } = tree.getCellAt(event.clientX, event.clientY);
 		if (tree.id == 'zotero-collections-tree') {
 			var view = tree.ownerDocument.defaultView.ZoteroPane.collectionsView;
 		}
@@ -376,7 +375,7 @@ Zotero.LibraryTreeView.prototype = {
 			throw new Error("Invalid tree id '" + tree.id + "'");
 		}
 		
-		if (!view.canDropCheck(row.value, Zotero.DragDrop.currentOrientation, event.dataTransfer)) {
+		if (!view.canDropCheck(row, Zotero.DragDrop.currentOrientation, event.dataTransfer)) {
 			this._setDropEffect(event, "none");
 			return;
 		}

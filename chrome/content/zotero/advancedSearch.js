@@ -154,11 +154,10 @@ var ZoteroAdvancedSearch = new function() {
 	{
 		if (event && tree && event.type == "dblclick")
 		{
-			var row = {}, col = {}, obj = {};
-			tree.treeBoxObject.getCellAt(event.clientX, event.clientY, row, col, obj);
-			// obj.value == cell/text/image
+			let { childElt } = tree.getCellAt(event.clientX, event.clientY);
+			// childElt == cell/text/image
 			// TODO: handle collection double-click
-			if (obj.value && this.itemsView && this.itemsView.selection.currentIndex > -1)
+			if (childElt && this.itemsView && this.itemsView.selection.currentIndex > -1)
 			{
 				var item = this.itemsView.getSelectedItems()[0];
 				

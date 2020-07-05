@@ -115,11 +115,10 @@ To add a new preference:
 			
 			var tree = t.parentNode;
 			
-			var row = {}, col = {}, obj = {};
-			var cell = tree.treeBoxObject.getCellAt(event.clientX, event.clientY, row, col, obj);
+			var { row } = tree.getCellAt(event.clientX, event.clientY);
 			
 			var treechildren = document.getElementById('locateManager-rows');
-			var treeitem = treechildren.children[row.value];
+			var treeitem = treechildren.children[row];
 			
 			treeitem.engine.hidden = !treeitem.engine.hidden;
 

@@ -238,7 +238,7 @@ Zotero.ProgressQueueDialog = function (progressQueue) {
 	 */
 	async function _onDblClick(event, tree) {
 		if (event && tree && event.type === 'dblclick') {
-			let itemID = _rowIDs[tree.treeBoxObject.getRowAt(event.clientX, event.clientY)];
+			let itemID = _rowIDs[tree.getRowAt(event.clientX, event.clientY)];
 			if (!itemID) return;
 			
 			let item = await Zotero.Items.getAsync(itemID);

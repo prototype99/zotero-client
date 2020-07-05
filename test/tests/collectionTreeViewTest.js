@@ -538,7 +538,7 @@ describe("Zotero.CollectionTreeView", function() {
 			yield cv.drop(row, orient, {
 				dropEffect: action,
 				effectAllowed: action,
-				mozSourceNode: win.document.getElementById(`zotero-${objectType}s-tree`).treeBoxObject.treeBody,
+				mozSourceNode: win.document.getElementById(`zotero-${objectType}s-tree`).treeBody,
 				types: {
 					contains: function (type) {
 						return type == `zotero/${objectType}`;
