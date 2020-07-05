@@ -25,35 +25,511 @@
 -->
 
 
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://zotero/skin/zotero.css" type="text/css"?>
+<?xml-stylesheet href="chrome://zotero/skin/standalone.css" type="text/css"?>
 <?xml-stylesheet href="chrome://zotero/skin/overlay.css" type="text/css"?>
 <?xml-stylesheet href="chrome://zotero/skin/contextPane.css" type="text/css"?>
 <?xml-stylesheet href="chrome://zotero-platform/content/overlay.css" type="text/css"?>
 <?xml-stylesheet href="chrome://zotero-platform-version/content/style.css"?>
+<?xml-stylesheet href="chrome://zotero/skin/itemPane.css" type="text/css"?>
+<?xml-stylesheet href="chrome://zotero-platform/content/itemPane.css" type="text/css"?>
+<?xml-stylesheet href="chrome://zotero-platform/content/zotero-react-client.css"?>
+
+<?xul-overlay href="chrome://zotero/content/standalone/editMenuOverlay.xul"?>
+<?xul-overlay href="chrome://zotero/content/zoteroPane.xul"?>
+<?xul-overlay href="chrome://zotero/content/itemPane.xul"?>
+<?xul-overlay href="chrome://zotero-platform/content/standalone/menuOverlay.xul"?>
 <?xul-overlay href="chrome://zotero/content/containers/containers.xul"?>
 
-<!DOCTYPE overlay [
+
+
+<!DOCTYPE window [
 	<!ENTITY % globalDTD SYSTEM "chrome://global/locale/global.dtd"> %globalDTD;
+	<!ENTITY % textcontextDTD SYSTEM "chrome://global/locale/textcontext.dtd" > %textcontextDTD;
+	<!ENTITY % standaloneDTD SYSTEM "chrome://zotero/locale/standalone.dtd" > %standaloneDTD;
+	<!ENTITY % brandDTD SYSTEM "chrome://branding/locale/brand.dtd" > %brandDTD;
 	<!ENTITY % zoteroDTD SYSTEM "chrome://zotero/locale/zotero.dtd"> %zoteroDTD;
 	<!ENTITY % dialogOverlayDTD SYSTEM "chrome://global/locale/dialogOverlay.dtd"> %dialogOverlayDTD;
 ]>
 
-<overlay id="zotero"
-	xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
-	xmlns:html="http://www.w3.org/1999/xhtml">
+<window id="main-window"
+		xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+		windowtype="navigator:browser" 
+		title="&brandShortName;"
+		width="1000" height="600"
+		persist="screenX screenY width height sizemode"
+		xmlns:html="http://www.w3.org/1999/xhtml">
 	
-	<script src="include.js"/>
-	<script src="tabs.js"/>
-	<script src="zoteroPane.js" type="application/javascript"/>
-	<script src="contextPane.js"/>
-	<script src="fileInterface.js"/>
-	<script src="reportInterface.js"/>
-	<script src="timelineInterface.js"/>
-	<script src="progressQueueDialog.js"/>
-	<script src="browser.js" type="application/javascript"/>
-	<script src="lookup.js"/>
-	<script src="locateMenu.js" type="application/javascript"/>
-	<script src="tooltip.js"/>
+	<html:script src="include.js"></html:script>
 	
+	<html:script src="resource://zotero/require.js"></html:script>
+	<html:script src="standalone/standalone.js"></html:script>
+	<html:script src="chrome://global/content/globalOverlay.js"></html:script>
+	<html:script src="chrome://global/content/contentAreaUtils.js"></html:script>
+	<!--<html:script src="chrome://global/content/inlineSpellCheckUI.js"></html:script>-->
+	
+	<html:script src="overlay.js"></html:script>
+	<html:script src="tabs.js"></html:script>
+	<html:script src="zoteroPane.js"></html:script>
+	<html:script src="itemPane.js"></html:script>
+	<html:script src="contextPane.js"></html:script>
+	<html:script src="fileInterface.js"></html:script>
+	<html:script src="reportInterface.js"></html:script>
+	<html:script src="timelineInterface.js"></html:script>
+	<html:script src="progressQueueDialog.js"></html:script>
+	<html:script src="lookup.js"></html:script>
+	<html:script src="locateMenu.js"></html:script>
+	<html:script src="tooltip.js"></html:script>
+	<html:script src="containers/tagSelectorContainer.js"></html:script>
+	
+	<commandset id="mainCommandSet">
+		<!--FILE-->
+		<command id="cmd_quitApplication" oncommand="goQuitApplication();"/>
+		<command id="cmd_close" oncommand="window.close();"/>
+		
+		<!--EDIT-->
+		<commandset id="editMenuCommands"/>
+		<command id="cmd_find"
+			oncommand="document.getElementById('zotero-tb-search').select()"/>
+	</commandset>
+	
+	<keyset id="mainKeyset">
+		<key id="key_close" key="&closeCmd.key;" command="cmd_close" modifiers="accel"/>
+		<key id="key_import"
+				key="&importCmd.key;"
+				command="cmd_zotero_import"
+				modifiers="accel shift"/>
+		<key id="key_importFromClipboard"
+				key="&importCmd.key;"
+				command="cmd_zotero_importFromClipboard"
+				modifiers="accel shift alt"/>
+		<key id="key_copyCitation"
+				command="cmd_zotero_copyCitation"
+				modifiers="accel shift"/>
+		<key id="key_copyBibliography"
+				command="cmd_zotero_copyBibliography"
+				modifiers="accel shift"/>
+		<key id="key_back"/>
+		<key id="key_forward"/>
+	</keyset>
+	<keyset id="editMenuKeys"/>
+	
+	<menupopup id="contentAreaContextMenu">
+		<menuitem id="context-undo"
+				label="&undoCmd.label;"
+				accesskey="&undoCmd.accesskey;"
+				command="cmd_undo"/>
+		<menuseparator id="context-sep-undo"/>
+		<menuitem id="context-cut"
+				label="&cutCmd.label;"
+				accesskey="&cutCmd.accesskey;"
+				command="cmd_cut"/>
+		<menuitem id="context-copy"
+				label="&copyCmd.label;"
+				accesskey="&copyCmd.accesskey;"
+				command="cmd_copy"/>
+		<menuitem id="context-paste"
+				label="&pasteCmd.label;"
+				accesskey="&pasteCmd.accesskey;"
+				command="cmd_paste"/>
+		<menuitem id="context-delete"
+				label="&deleteCmd.label;"
+				accesskey="&deleteCmd.accesskey;"
+				command="cmd_delete"/>
+		<menuseparator id="context-sep-paste"/>
+		<menuitem id="context-selectall"
+				label="&selectAllCmd.label;"
+				accesskey="&selectAllCmd.accesskey;"
+				command="cmd_selectAll"/>
+	</menupopup>
+	<vbox id="titlebar">
+		<hbox id="titlebar-buttonbox-container" skipintoolbarset="true">
+			<hbox id="titlebar-buttonbox">
+				<toolbarbutton class="titlebar-button titlebar-min" oncommand="window.minimize();"/>
+				<toolbarbutton class="titlebar-button titlebar-max" oncommand="onTitlebarMaxClick();"/>
+				<toolbarbutton class="titlebar-button titlebar-close" command="cmd_closeWindow"/>
+			</hbox>
+		</hbox>
+	</vbox>
+	<toolbox id="navigator-toolbox" class="toolbox-top" mode="icons" defaultmode="icons">
+		<!-- Menu -->
+		<toolbar type="menubar" id="toolbar-menubar" class="chromeclass-menubar" customizable="true"
+				defaultset="menubar-items"
+				mode="icons" iconsize="small" defaulticonsize="small"
+				context="toolbar-context-menu">
+			<toolbaritem id="menubar-items" align="center">
+				<!-- TODO: Localize labels -->
+				<!--
+					On macOS the document's top-most menubar node is used and
+					there is no way to change it after the initialization, only
+					the children can be modified. All non-menu nodes are ignored
+				-->
+				<menubar id="main-menubar"
+				style="border:0px;padding:0px;margin:0px;-moz-appearance:none">
+					<menu id="fileMenu" label="&fileMenu.label;" accesskey="&fileMenu.accesskey;"
+							onpopupshowing="ZoteroStandalone.onFileMenuOpen()">
+						<menupopup id="menu_FilePopup">
+							<menu id="menu_newItem" class="menu-type-library" label="&zotero.toolbar.newItem.label;">
+								<menupopup id="menu_NewItemPopup"
+										onpopupshowing="ZoteroStandalone.buildNewItemMenu()"/>
+							</menu>
+							<menuitem id="menu_newNote" class="menu-type-library" label="&zotero.toolbar.newNote;"
+									command="cmd_zotero_newStandaloneNote"/>
+							<menuitem id="menu_newCollection" class="menu-type-library" label="&zotero.toolbar.newCollection.label;"
+									command="cmd_zotero_newCollection"/>
+							<!-- TODO: Localize -->
+							<menuitem id="menu_export_file" class="menu-type-reader"
+									label="Save As…"
+									oncommand="ZoteroStandalone.onReaderCmd('export')"/>
+							<menuitem label="Print" class="menu-type-reader" oncommand="ZoteroStandalone.onReaderCmd('print')"/>
+							<menuitem label="&zotero.items.menu.showInLibrary;" class="menu-type-reader" oncommand="ZoteroStandalone.onReaderCmd('showInLibrary')"/>
+							<menuseparator/>
+							<menuitem id="menu_close" class="menu-type-library" label="&closeCmd.label;" key="key_close"
+									accesskey="&closeCmd.accesskey;" command="cmd_close"/>
+							<menuitem id="menu_close_tab" class="menu-type-reader" label="&closeCmd.label;" key="key_close"
+									accesskey="&closeCmd.accesskey;" oncommand="Zotero_Tabs.close()"/>
+							<menuseparator class="menu-type-library"/>
+							<menuitem id="menu_export_files" class="menu-type-library"
+									oncommand="ZoteroPane.exportSelectedFiles()"
+									hidden="true"/>
+							<menuseparator class="menu-type-library" hidden="true"/>
+							<menuitem id="menu_import" class="menu-type-library" label="&importCmd.label;"
+									command="cmd_zotero_import" key="key_import"/>
+							<menuitem id="menu_importFromClipboard" class="menu-type-library" label="&importFromClipboardCmd.label;"
+									command="cmd_zotero_importFromClipboard" key="key_importFromClipboard"/>
+							<menuitem id="menu_exportLibrary" class="menu-type-library" label="&zotero.toolbar.export.label;"
+									command="cmd_zotero_exportLibrary"/>
+						</menupopup>
+					</menu>
+					
+					<menu id="menu_edit"
+							onpopupshowing="ZoteroStandalone.updateQuickCopyOptions()">
+						<menupopup id="menu_EditPopup">
+							<menuitem id="menu_undo"/>
+							<menuitem id="menu_redo"/>
+							<menuseparator/>
+							<menuitem id="menu_cut"/>
+							<menuitem id="menu_copy"/>
+							<menuitem id="menu_copyCitation"
+									class="menu-type-library"
+									label="&copyCitationCmd.label;"
+									command="cmd_zotero_copyCitation"
+									key="key_copyCitation"
+									hidden="true"/>
+							<menuitem id="menu_copyBibliography"
+									class="menu-type-library"
+									label="&copyBibliographyCmd.label;"
+									command="cmd_zotero_copyBibliography"
+									key="key_copyBibliography"
+									hidden="true"/>
+							<menuitem id="menu_copyExport"
+									class="menu-type-library"
+									key="key_copyBibliography"
+									command="cmd_zotero_copyBibliography"
+									hidden="true"/>
+							<menuitem id="menu_paste"/>
+							<menuitem id="menu_delete"/>
+							<menuseparator class="menu-type-library"/>
+							<menuitem id="menu_selectAll" class="menu-type-library"/>
+							<menuseparator class="menu-type-library"/>
+							<menuitem id="menu_find" class="menu-type-library"/>
+							<menuitem id="menu_advancedSearch"
+									class="menu-type-library"
+									label="&zotero.toolbar.advancedSearch;"
+									command="cmd_zotero_advancedSearch"/>
+							<menuseparator class="menu-type-library" hidden="true" id="textfieldDirection-separator"/>
+							<menuitem id="textfieldDirection-swap"
+									command="cmd_switchTextDirection"
+									key="key_switchTextDirection"
+									label="&bidiSwitchTextDirectionItem.label;"
+									accesskey="&bidiSwitchTextDirectionItem.accesskey;"
+									hidden="true"/>
+						</menupopup>
+					</menu>
+					
+					<menu id="view-menu"
+							label="&viewMenu.label;"
+							onpopupshowing="ZoteroStandalone.onViewMenuOpen()">
+						<menupopup id="menu_viewPopup">
+							<menuitem
+								class="menu-type-reader"
+								label="&zotero.pdfReader.rotateClockwise;"
+								oncommand="ZoteroStandalone.onReaderCmd('rotatecw')"
+							/>
+							<menuitem
+								class="menu-type-reader"
+								label="&zotero.pdfReader.rotateCounterclockwise;"
+								oncommand="ZoteroStandalone.onReaderCmd('rotateccw')"
+							/>
+							<menuseparator class="menu-type-reader"/>
+							<menuitem
+								id="view-menuitem-hand-tool"
+								class="menu-type-reader"
+								label="&zotero.pdfReader.handTool;"
+								oncommand="ZoteroStandalone.onReaderCmd('switchcursortool_hand')"
+							/>
+							<menuseparator class="menu-type-reader"/>
+							<menuitem
+								id="view-menuitem-vertical-scrolling"
+								class="menu-type-reader"
+								label="&zotero.pdfReader.verticalScrolling;"
+								oncommand="ZoteroStandalone.onReaderCmd('switchscrollmode_vertical')"
+							/>
+							<menuitem
+								id="view-menuitem-horizontal-scrolling"
+								class="menu-type-reader"
+								label="&zotero.pdfReader.horizontalScrolling;"
+								oncommand="ZoteroStandalone.onReaderCmd('switchscrollmode_horizontal')"
+							/>
+							<menuitem
+								id="view-menuitem-wrapped-scrolling"
+								class="menu-type-reader"
+								label="&zotero.pdfReader.wrappedScrolling;"
+								oncommand="ZoteroStandalone.onReaderCmd('switchscrollmode_wrapped')"
+							/>
+							<menuseparator class="menu-type-reader"/>
+							<menuitem
+								id="view-menuitem-no-spreads"
+								class="menu-type-reader"
+								label="&zotero.pdfReader.noSpreads;"
+								oncommand="ZoteroStandalone.onReaderCmd('switchspreadmode_none')"
+							/>
+							<menuitem
+								id="view-menuitem-odd-spreads"
+								class="menu-type-reader"
+								label="&zotero.pdfReader.oddSpreads;"
+								oncommand="ZoteroStandalone.onReaderCmd('switchspreadmode_odd')"
+							/>
+							<menuitem
+								id="view-menuitem-even-spreads"
+								class="menu-type-reader"
+								label="&zotero.pdfReader.evenSpreads;"
+								oncommand="ZoteroStandalone.onReaderCmd('switchspreadmode_even')"
+							/>
+							<menuseparator class="menu-type-reader"/>
+
+							<menu id="layout-menu" label="&layout.label;">
+								<menupopup oncommand="ZoteroStandalone.onViewMenuItemClick(event)">
+									<menuitem
+										id="view-menuitem-standard"
+										label="&standardView.label;"
+										type="checkbox"
+									/>
+									<menuitem
+										id="view-menuitem-stacked"
+										label="&stackedView.label;"
+										type="checkbox"
+									/>
+									<menuseparator/>
+									<menuitem
+										id="view-menuitem-collections-pane"
+										label="&collectionsPane.label;"
+										type="checkbox"
+									/>
+									<menuitem
+										id="view-menuitem-item-pane"
+										label="&itemPane.label;"
+										type="checkbox"
+									/>
+									<menuitem
+										id="view-menuitem-tag-selector"
+										label="&tagSelector.label;"
+										type="checkbox"
+									/>
+								</menupopup>
+							</menu>
+							<menu id="font-size-menu"
+									label="&fontSize.label;">
+								<menupopup oncommand="ZoteroStandalone.onViewMenuItemClick(event)">
+									<menuitem id="view-menuitem-font-size-bigger" label="&zotero.general.bigger;"/>
+									<menuitem id="view-menuitem-font-size-smaller" label="&zotero.general.smaller;"/>
+									<menuseparator/>
+									<menuitem id="view-menuitem-font-size-reset" label="&zotero.general.reset;"/>
+								</menupopup>
+							</menu>
+							<menu id="note-font-size-menu"
+									label="&noteFontSize.label;">
+								<!-- TODO: Maybe switch to Bigger/Smaller once we can update without restarting -->
+								<!--<menupopup oncommand="ZoteroStandalone.onViewMenuItemClick(event)">
+									<menuitem id="view-menuitem-note-font-size-bigger" label="&zotero.general.bigger;"/>
+									<menuitem id="view-menuitem-note-font-size-smaller" label="&zotero.general.smaller;"/>
+									<menuseparator/>
+									<menuitem id="view-menuitem-note-font-size-reset" label="&zotero.general.reset;"/>-->
+								<menupopup oncommand="ZoteroStandalone.updateNoteFontSize(event)">
+									<menuitem label="11" type="checkbox"/>
+									<menuitem label="12" type="checkbox"/>
+									<menuitem label="13" type="checkbox"/>
+									<menuitem label="14" type="checkbox"/>
+									<menuitem label="18" type="checkbox"/>
+									<menuitem label="24" type="checkbox"/>
+									<menuitem label="36" type="checkbox"/>
+									<menuitem label="48" type="checkbox"/>
+									<menuitem label="64" type="checkbox"/>
+									<menuitem label="72" type="checkbox"/>
+									<menuitem label="96" type="checkbox"/>
+									<menuitem/>
+									<menuitem
+										id="view-menuitem-note-font-size-reset"
+										label="&zotero.general.reset;"
+										oncommand="ZoteroStandalone.onViewMenuItemClick(event); event.stopPropagation();"/>
+								</menupopup>
+							</menu>
+							<menuseparator/>
+							<menuitem id="view-menuitem-recursive-collections"
+								class="menu-type-library"
+								label="&recursiveCollections.label;"
+								oncommand="ZoteroStandalone.onViewMenuItemClick(event)"
+								type="checkbox"
+							/>
+						</menupopup>
+					</menu>
+					
+					<menu 
+						id="go-menu"
+						class="menu-type-reader"
+						label="&goMenu.label;"
+						onpopupshowing="ZoteroStandalone.onGoMenuOpen()"
+					>
+						<menupopup id="menu_goPopup">
+							<menuitem
+								id="go-menuitem-first-page"
+								class="menu-type-reader"
+								label="&zotero.pdfReader.firstPage;"
+								oncommand="ZoteroStandalone.onReaderCmd('firstpage')"
+							/>
+							<menuitem 
+								id="go-menuitem-last-page"
+								class="menu-type-reader"
+								label="&zotero.pdfReader.lastPage;"
+								oncommand="ZoteroStandalone.onReaderCmd('lastpage')"
+							/>
+							<menuseparator class="menu-type-reader"/>
+							<menuitem 
+								id="go-menuitem-back"
+								class="menu-type-reader"
+								label="&zotero.pdfReader.back;"
+								oncommand="ZoteroStandalone.onReaderCmd('back')"
+							/>
+							<menuitem 
+								id="go-menuitem-forward"
+								class="menu-type-reader"
+								label="&zotero.pdfReader.forward;"
+								oncommand="ZoteroStandalone.onReaderCmd('forward')"
+							/>
+						</menupopup>
+					</menu>
+					
+					<menu id="toolsMenu" label="&toolsMenu.label;" accesskey="&toolsMenu.accesskey;">
+						<menupopup id="menu_ToolsPopup">
+							<menuitem id="menu_createTimeline" class="menu-type-library" label="&zotero.toolbar.timeline.label;"
+									command="cmd_zotero_createTimeline"/>
+							<menuitem id="menu_rtfScan" class="menu-type-library" label="&zotero.toolbar.rtfScan.label;"
+									command="cmd_zotero_rtfScan"/>
+							<menuseparator/>
+							<menuitem id="installConnector"
+									class="menu-type-library"
+									accessKey="&installConnector.accesskey;"
+									label="&installConnector.label;"
+									oncommand="ZoteroStandalone.openHelp('connectors');"/>
+							<menuitem id="menu_addons" class="menu-type-library" label="&addons.label;"
+									oncommand="Zotero.openInViewer('chrome://mozapps/content/extensions/extensions.xul', ZoteroStandalone.updateAddonsPane)"/>
+							<menu id="developer-menu"
+									label="&developer.label;">
+								<menupopup>
+									<menuitem id="menu_errorConsole" label="Error Console" oncommand="toJavaScriptConsole()"/>
+									<menuitem id="menu_runJS" label="Run JavaScript" oncommand="openRunJSWindow()"/>
+									<menuitem id="style-editor-menu-item" label="Style Editor" oncommand="openStyleEditor()"/>
+									<menuitem id="scaffold-menu-item" label="Translator Editor" oncommand="openScaffold()"/>
+								</menupopup>
+							</menu>
+							<menuseparator/>
+							<menu id="manage-attachments-menu" class="menu-type-library" label="&manageAttachments.label;"
+									onpopupshowing="ZoteroStandalone.onManageAttachmentsMenuOpen()"
+									oncommand="ZoteroStandalone.onManageAttachmentsMenuItemClick(event)">
+								<menupopup id="manage-attachments-menupopup">
+									<menuitem
+											id="file-menuitem-convert-to-stored"
+											label="&convertToStored.label;"/>
+								</menupopup>
+							</menu>
+						</menupopup>
+					</menu>
+					
+					<menu id="windowMenu"
+						  label="&windowMenu.label;"
+						  onpopupshowing="macWindowMenuDidShow();"
+						  onpopuphidden="macWindowMenuDidHide();"
+						  >
+					</menu>
+					
+					<menu id="helpMenu"
+							label="&helpMenu.label;"
+							accesskey="&helpMenu.accesskey;">
+						<menupopup id="menu_HelpPopup">
+							<menuitem id="menu_openHelp"
+									  oncommand="ZoteroStandalone.openHelp();"
+									  label="&productHelp.label;"
+									  accesskey="&productHelp.accesskey;"
+									  key="key_openHelpMac"/>
+							<menuitem id="troubleShooting"
+									  accesskey="&helpTroubleshootingInfo.accesskey;"
+									  label="&helpTroubleshootingInfo.label;"
+									  oncommand="ZoteroStandalone.openHelp('troubleshooting');"/>
+							<menuitem id="feedbackPage"
+									  accesskey="&helpFeedbackPage.accesskey;"
+									  label="&helpFeedbackPage.label;"
+									  oncommand="ZoteroStandalone.openHelp('feedback');"/>
+							<menuseparator/>
+							<menuitem id="reportErrors"
+									  accesskey="&helpReportErrors.accesskey;"
+									  label="&helpReportErrors.label;"
+									  command="cmd_zotero_reportErrors"/>
+							<menu id="debug-output-menu"
+									accesskey="&debugOutputLogging.accesskey;"
+									label="&debugOutputLogging.label;"
+									hidden="true">
+								<menupopup id="debug-output-popup"
+										onpopupshowing="ZoteroStandalone.DebugOutput.update()">
+									<menuitem id="debug-output-submit"
+											label="&debugOutputLogging.submit;"
+											oncommand="ZoteroStandalone.DebugOutput.submit()"
+											hidden="true"/>
+									<menuitem id="debug-output-enable-disable"
+											oncommand="ZoteroStandalone.DebugOutput.toggleStore()"/>
+									<menuseparator/>
+									<menuitem id="debug-output-status" disabled="true"/>
+									<menuseparator/>
+									<menuitem id="debug-output-view"
+											label="&debugOutputLogging.view;"
+											oncommand="ZoteroStandalone.DebugOutput.view()"/>
+									<menuitem id="debug-output-clear"
+											label="&debugOutputLogging.clear;"
+											oncommand="ZoteroStandalone.DebugOutput.clear()"/>
+									<menuseparator/>
+									<menuitem id="debug-output-restart-enabled"
+											label="&debugOutputLogging.restartWithLoggingEnabled;"
+											oncommand="ZoteroStandalone.DebugOutput.restartEnabled()"/>
+								</menupopup>
+							</menu>
+							<menuseparator/>
+							<menuitem id="checkForUpdates"
+									  accesskey="&helpCheckForUpdates.accesskey;"
+									  label="&helpCheckForUpdates.label;"
+									  oncommand="ZoteroStandalone.checkForUpdates();"/>
+							<menuitem id="aboutName"
+									  accesskey="&aboutProduct.accesskey;"
+									  label="&aboutProduct.label;"
+									  oncommand="ZoteroPane.openAboutDialog();"/>
+						</menupopup>
+					</menu>
+				</menubar>
+			</toolbaritem>
+		</toolbar>
+	</toolbox>
+	<!-- Keep in sync with Zotero.test conditional block in overlay.js -->
+	<div xmlns="http://www.w3.org/1999/xhtml" id="tab-bar-container"/>
+
 	<commandset id="mainCommandSet">
 		<command id="cmd_zotero_reportErrors" oncommand="ZoteroPane_Local.reportErrors();"/>
 		<command id="cmd_zotero_import" oncommand="Zotero_File_Interface.showImportWizard();"/>
@@ -592,7 +1068,122 @@
 							</splitter>
 		
 							<!-- itemPane.xul -->
-							<vbox id="zotero-item-pane"/>
+							<vbox id="zotero-item-pane" zotero-persist="width height">
+								<!-- My Publications -->
+								<hbox id="zotero-item-pane-top-buttons-my-publications" class="zotero-item-pane-top-buttons" hidden="true">
+									<button id="zotero-item-collection-show-hide"/>
+								</hbox>
+								
+								<!-- Trash -->
+								<hbox id="zotero-item-pane-top-buttons-trash" class="zotero-item-pane-top-buttons" hidden="true">
+									<button id="zotero-item-restore-button" label="&zotero.items.menu.restoreToLibrary;"
+										oncommand="ZoteroPane_Local.restoreSelectedItems()"/>
+									<button id="zotero-item-delete-button" label="&zotero.item.deletePermanently;"
+										oncommand="ZoteroPane_Local.deleteSelectedItems()"/>
+								</hbox>
+								
+								<!-- Feed -->
+								<hbox id="zotero-item-pane-top-buttons-feed" class="zotero-item-pane-top-buttons" hidden="true">
+									<button id="zotero-feed-item-toggleRead-button"
+										oncommand="ZoteroPane_Local.toggleSelectedItemsRead();"/>
+									<button id="zotero-feed-item-addTo-button" type="menu-button"
+										oncommand="ZoteroItemPane.translateSelectedItems()">
+										<menupopup id="zotero-item-addTo-menu" onpopupshowing="ZoteroItemPane.buildTranslateSelectContextMenu(event);"/>
+									</button>
+								</hbox>
+								
+								<!-- Commons -->
+								<button id="zotero-item-show-original" label="Show Original"
+									oncommand="ZoteroPane_Local.showOriginalItem()" hidden="true"/>
+								
+								<deck id="zotero-item-pane-content" class="zotero-item-pane-content" selectedIndex="0" flex="1">
+									<!-- Center label (for zero or multiple item selection) -->
+									<groupbox id="zotero-item-pane-groupbox" pack="center" align="center">
+										<vbox id="zotero-item-pane-message-box"/>
+									</groupbox>
+									
+									<!-- Regular item -->
+									<tabbox id="zotero-view-tabbox" class="zotero-view-tabbox" flex="1" onselect="if (!ZoteroPane_Local.collectionsView.selection || event.originalTarget.localName != 'tabpanels') { return; }; ZoteroItemPane.viewItem(ZoteroPane_Local.getSelectedItems()[0], ZoteroPane_Local.collectionsView.editable ? 'edit' : 'view', this.selectedIndex)">
+										<tabs id="zotero-editpane-tabs" class="zotero-editpane-tabs">
+											<tab id="zotero-editpane-info-tab" label="&zotero.tabs.info.label;"/>
+											<tab id="zotero-editpane-notes-tab" label="&zotero.tabs.notes.label;"/>
+											<tab id="zotero-editpane-tags-tab" label="&zotero.tabs.tags.label;"/>
+											<tab id="zotero-editpane-related-tab" label="&zotero.tabs.related.label;"/>
+										</tabs>
+										<tabpanels id="zotero-view-item" class="zotero-view-item" flex="1">
+											<tabpanel flex="1">
+												<zoteroitembox id="zotero-editpane-item-box" class="zotero-editpane-item-box" flex="1"/>
+											</tabpanel>
+											
+											<tabpanel flex="1" orient="vertical">
+												<vbox flex="1" id="zotero-editpane-notes" class="zotero-box">
+													<hbox align="center">
+														<label id="zotero-editpane-notes-label"/>
+														<button id="zotero-editpane-notes-add" label="&zotero.item.add;" oncommand="ZoteroItemPane.addNote(event.shiftKey);"/>
+													</hbox>
+													<grid flex="1">
+														<columns>
+															<column flex="1"/>
+															<column/>
+														</columns>
+														<rows id="zotero-editpane-dynamic-notes" flex="1"/>
+													</grid>
+												</vbox>
+											</tabpanel>
+											
+											<tabpanel id="tags-pane" class="tags-pane" orient="vertical" context="tags-context-menu">
+												<html:div id="tags-box-container" class="tags-box-container"></html:div>
+											</tabpanel>
+											
+											<tabpanel>
+												<relatedbox id="zotero-editpane-related" class="zotero-editpane-related" flex="1"/>
+											</tabpanel>
+										</tabpanels>
+									</tabbox>
+									
+									<!-- Note item -->
+									<groupbox id="zotero-view-note" flex="1">
+										<!--
+											'onerror' handler crashes the app on a save error to prevent typing in notes
+											while they're not being saved
+										-->
+										<deck id="zotero-note-editor-switcher" flex="1">
+											<oldzoteronoteeditor id="zotero-note-editor-old" flex="1" notitle="1"
+												previousfocus="zotero-items-tree"
+												onerror="ZoteroPane.displayErrorMessage(); this.mode = 'view'"/>
+											<zoteronoteeditor id="zotero-note-editor" flex="1" notitle="1"
+												previousfocus="zotero-items-tree"/>
+										</deck>
+										<button id="zotero-view-note-button"
+												label="&zotero.notes.separate;"
+												oncommand="ZoteroItemPane.openNoteWindow()"/>
+									</groupbox>
+									
+									<!-- Attachment item -->
+									<groupbox>
+										<zoteroattachmentbox id="zotero-attachment-box" flex="1"/>
+									</groupbox>
+									
+									<!-- Duplicate merging -->
+									<vbox id="zotero-duplicates-merge-pane" flex="1">
+										<groupbox>
+											<button id="zotero-duplicates-merge-button" oncommand="Zotero_Duplicates_Pane.merge()"/>
+										</groupbox>
+										
+										<groupbox id="zotero-duplicates-merge-version-select">
+											<description>&zotero.duplicatesMerge.versionSelect;</description>
+											<hbox>
+												<listbox id="zotero-duplicates-merge-original-date" onselect="Zotero_Duplicates_Pane.setMaster(this.selectedIndex)" rows="0"/>
+											</hbox>
+										</groupbox>
+										
+										<groupbox flex="1">
+											<description id="zotero-duplicates-merge-field-select">&zotero.duplicatesMerge.fieldSelect;</description>
+											<zoteroitembox id="zotero-duplicates-merge-item-box" flex="1"/>
+										</groupbox>
+									</vbox>
+								</deck>
+							</vbox>
 						</box>
 					</hbox>
 				</vbox>
@@ -675,4 +1266,57 @@
 		</stack>
 		
 	</stack>
-</overlay>
+	
+	<!-- Tag Selector -->
+	<menupopup id="tag-menu">
+		<menuitem label="&zotero.tagSelector.assignColor;"
+			oncommand="ZoteroPane.tagSelector.openColorPickerWindow(); event.stopPropagation();"/>
+		<menuitem label="&zotero.tagSelector.renameTag;"
+			oncommand="ZoteroPane.tagSelector.openRenamePrompt(); event.stopPropagation();"/>
+		<menuitem label="&zotero.tagSelector.deleteTag;"
+			oncommand="ZoteroPane.tagSelector.openDeletePrompt(); event.stopPropagation();"/>
+	</menupopup>
+	<menupopup id="tag-selector-view-settings-menu"
+		onpopupshowing="
+			document.getElementById('show-automatic').setAttribute('checked', ZoteroPane.tagSelector.showAutomatic);
+			document.getElementById('display-all-tags').setAttribute('checked', ZoteroPane.tagSelector.displayAllTags);
+			document.getElementById('num-selected').label = ZoteroPane.tagSelector.label;
+			(async function () {
+				var libraryID = ZoteroPane.tagSelector.libraryID;
+				var library = Zotero.Libraries.get(libraryID);
+				var enabled = false;
+				if (library.editable) {
+					if ((await Zotero.Tags.getAutomaticInLibrary(libraryID)).length) {
+						enabled = true;
+					}
+				}
+				document.getElementById('delete-automatic-tags').disabled = !enabled;
+			})();">
+		<menuitem id="num-selected" disabled="true"/>
+		<menuitem id="deselect-all" label="&zotero.tagSelector.clearAll;"
+			oncommand="ZoteroPane.tagSelector.deselectAll(); event.stopPropagation();"/>
+		<menuseparator/>
+		<menuitem id="show-automatic" label="&zotero.tagSelector.showAutomatic;" type="checkbox"
+			oncommand="ZoteroPane.tagSelector.toggleShowAutomatic(); event.stopPropagation();"/>
+		<menuitem
+			id="display-all-tags"
+			label="&zotero.tagSelector.displayAllInLibrary;"
+			type="checkbox"
+			oncommand="ZoteroPane.tagSelector.toggleDisplayAllTags(); event.stopPropagation();"
+		/>
+		<menuseparator/>
+		<menuitem id="delete-automatic-tags" label="&zotero.tagSelector.deleteAutomaticInLibrary;" type="checkbox"
+									oncommand="ZoteroPane.tagSelector.deleteAutomatic();
+										this.setAttribute('checked', false);
+										event.stopPropagation();"/>
+	</menupopup>
+	
+	<!-- Tags Box -->
+	<popupset>
+		<menupopup id="tags-context-menu"
+				onpopupshowing="return ZoteroItemPane.onTagsContextPopupShowing()">
+			<menuitem id="remove-all-item-tags" label="&zotero.item.tags.removeAll;"
+				oncommand="ZoteroItemPane.removeAllTags()"/>
+		</menupopup>
+	</popupset>
+</window>
