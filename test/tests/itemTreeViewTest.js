@@ -382,8 +382,8 @@ describe("Zotero.ItemTreeView", function() {
 			
 			// Remove item
 			var treeRow = itemsView.getRow(2);
-			yield Zotero.DB.executeTransaction(function* () {
-				yield collection.removeItems([treeRow.ref.id]);
+			yield Zotero.DB.executeTransaction(async function () {
+				await collection.removeItems([treeRow.ref.id]);
 			}.bind(this));
 			
 			// Selection should stay on third row
@@ -423,12 +423,12 @@ describe("Zotero.ItemTreeView", function() {
 			}
 			
 			var num = numVisibleRows + 10;
-			yield Zotero.DB.executeTransaction(function* () {
+			yield Zotero.DB.executeTransaction(async function () {
 				for (let i = 0; i < num; i++) {
 					let title = getTitle(i, num);
 					let item = createUnsavedDataObject('item', { title });
 					item.addToCollection(collection.id);
-					yield item.save();
+					await item.save();
 				}
 			}.bind(this));
 			
@@ -445,12 +445,12 @@ describe("Zotero.ItemTreeView", function() {
 				skipSelect: true
 			});
 			// Then add a few more in a transaction
-			yield Zotero.DB.executeTransaction(function* () {
+			yield Zotero.DB.executeTransaction(async function () {
 				for (let i = 0; i < 3; i++) {
 					var item = createUnsavedDataObject(
 						'item', { title: getTitle(0, num), collections: [collection.id] }
 					);
-					yield item.save({
+					await item.save({
 						skipSelect: true
 					});
 				}
@@ -474,12 +474,12 @@ describe("Zotero.ItemTreeView", function() {
 			}
 			
 			var num = numVisibleRows + 10;
-			yield Zotero.DB.executeTransaction(function* () {
+			yield Zotero.DB.executeTransaction(async function () {
 				for (let i = 0; i < num; i++) {
 					let title = getTitle(i, num);
 					let item = createUnsavedDataObject('item', { title });
 					item.addToCollection(collection.id);
-					yield item.save();
+					await item.save();
 				}
 			}.bind(this));
 			
@@ -499,12 +499,12 @@ describe("Zotero.ItemTreeView", function() {
 				skipSelect: true
 			});
 			// Then add a few more in a transaction
-			yield Zotero.DB.executeTransaction(function* () {
+			yield Zotero.DB.executeTransaction(async function () {
 				for (let i = 0; i < 3; i++) {
 					var item = createUnsavedDataObject(
 						'item', { title: getTitle(0, num), collections: [collection.id] }
 					);
-					yield item.save({
+					await item.save({
 						skipSelect: true
 					});
 				}
@@ -530,13 +530,13 @@ describe("Zotero.ItemTreeView", function() {
 			}
 			
 			var num = numVisibleRows + 10;
-			yield Zotero.DB.executeTransaction(function* () {
+			yield Zotero.DB.executeTransaction(async function () {
 				// Start at "*1" so we can add items before
 				for (let i = 1; i < num; i++) {
 					let title = getTitle(i, num);
 					let item = createUnsavedDataObject('item', { title });
 					item.addToCollection(collection.id);
-					yield item.save();
+					await item.save();
 				}
 			}.bind(this));
 			
@@ -551,12 +551,12 @@ describe("Zotero.ItemTreeView", function() {
 				skipSelect: true
 			});
 			// Then add a few more in a transaction
-			yield Zotero.DB.executeTransaction(function* () {
+			yield Zotero.DB.executeTransaction(async function () {
 				for (let i = 0; i < 3; i++) {
 					var item = createUnsavedDataObject(
 						'item', { title: getTitle(0, num), collections: [collection.id] }
 					);
-					yield item.save({
+					await item.save({
 						skipSelect: true
 					});
 				}
@@ -651,8 +651,8 @@ describe("Zotero.ItemTreeView", function() {
 			assert.equal(cv.selectedTreeRow.id, 'U' + userLibraryID);
 			yield waitForItemsLoad(win);
 			assert.isNumber(zp.itemsView.getRowIndexByID(item.id));
-			yield Zotero.DB.executeTransaction(function* () {
-				yield collection.addItem(item.id);
+			yield Zotero.DB.executeTransaction(async function () {
+				await collection.addItem(item.id);
 			});
 			assert.isFalse(zp.itemsView.getRowIndexByID(item.id));
 		});

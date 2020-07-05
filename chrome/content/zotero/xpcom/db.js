@@ -382,31 +382,31 @@ Zotero.DBConnection.prototype.getNextName = Zotero.Promise.coroutine(function* (
 // Async methods
 //
 //
-// Zotero.DB.executeTransaction(function* (conn) {
-//     var created = yield Zotero.DB.queryAsync("CREATE TEMPORARY TABLE tmpFoo (foo TEXT, bar INT)");
+// Zotero.DB.executeTransaction(async function (conn) {
+//     var created = await Zotero.DB.queryAsync("CREATE TEMPORARY TABLE tmpFoo (foo TEXT, bar INT)");
 //     
 //     // created == true
 //     
-//     var result = yield Zotero.DB.queryAsync("INSERT INTO tmpFoo VALUES ('a', ?)", 1);
+//     var result = await Zotero.DB.queryAsync("INSERT INTO tmpFoo VALUES ('a', ?)", 1);
 //     
 //     // result == 1
 //     
-//     yield Zotero.DB.queryAsync("INSERT INTO tmpFoo VALUES ('b', 2)");
-//     yield Zotero.DB.queryAsync("INSERT INTO tmpFoo VALUES ('c', 3)");
-//     yield Zotero.DB.queryAsync("INSERT INTO tmpFoo VALUES ('d', 4)");
+//     await Zotero.DB.queryAsync("INSERT INTO tmpFoo VALUES ('b', 2)");
+//     await Zotero.DB.queryAsync("INSERT INTO tmpFoo VALUES ('c', 3)");
+//     await Zotero.DB.queryAsync("INSERT INTO tmpFoo VALUES ('d', 4)");
 //     
-//     var value = yield Zotero.DB.valueQueryAsync("SELECT foo FROM tmpFoo WHERE bar=?", 2);
+//     var value = await Zotero.DB.valueQueryAsync("SELECT foo FROM tmpFoo WHERE bar=?", 2);
 //     
 //     // value == "b"
 //     
-//     var vals = yield Zotero.DB.columnQueryAsync("SELECT foo FROM tmpFoo");
+//     var vals = await Zotero.DB.columnQueryAsync("SELECT foo FROM tmpFoo");
 //     
 //     // '0' => "a"
 //     // '1' => "b"
 //     // '2' => "c"
 //     // '3' => "d"
 //     
-//     let rows = yield Zotero.DB.queryAsync("SELECT * FROM tmpFoo");
+//     let rows = await Zotero.DB.queryAsync("SELECT * FROM tmpFoo");
 //     for (let i=0; i<rows.length; i++) {
 //         let row = rows[i];
 //         // row.foo == 'a', row.bar == 1
@@ -422,8 +422,7 @@ Zotero.DBConnection.prototype.getNextName = Zotero.Promise.coroutine(function* (
 // });
 //
 /**
- * @param {Function} func - Generator function that yields promises,
- *                          generally from queryAsync() and similar
+ * @param {Function} func - Async function, generally from queryAsync() and similar
  * @return {Promise} - Promise for result of generator function
  */
 Zotero.DBConnection.prototype.executeTransaction = Zotero.Promise.coroutine(function* (func, options) {
@@ -690,7 +689,7 @@ Zotero.DBConnection.prototype.queryAsync = Zotero.Promise.coroutine(function* (s
 
 
 Zotero.DBConnection.prototype.queryTx = function (sql, params, options) {
-	return this.executeTransaction(function* () {
+	return this.executeTransaction(async function () {
 		options = options || {};
 		delete options.tx;
 		return this.queryAsync(sql, params, options);
@@ -894,7 +893,7 @@ Zotero.DBConnection.prototype.getCachedStatements = function () {
 
 // TEMP
 Zotero.DBConnection.prototype.vacuum = function () {
-	return this.executeTransaction(function* () {}, { vacuumOnCommit: true });
+	return this.executeTransaction(async function () {}, { vacuumOnCommit: true });
 };
 
 

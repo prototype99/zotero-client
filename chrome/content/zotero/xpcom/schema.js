@@ -717,8 +717,8 @@ Zotero.Schema = new function(){
 			
 			var itemTypeID = Zotero.ID.get('customItemTypes');
 			
-			yield Zotero.DB.executeTransaction(function* () {
-				yield Zotero.DB.queryAsync("INSERT INTO customItemTypes VALUES (?, 'nsfReviewer', 'NSF Reviewer', 1, 'chrome://zotero/skin/report_user.png')", itemTypeID);
+			yield Zotero.DB.executeTransaction(async function () {
+				await Zotero.DB.queryAsync("INSERT INTO customItemTypes VALUES (?, 'nsfReviewer', 'NSF Reviewer', 1, 'chrome://zotero/skin/report_user.png')", itemTypeID);
 				
 				var fields = [
 					['name', 'Name'],
@@ -738,11 +738,11 @@ Zotero.Schema = new function(){
 					var fieldID = Zotero.ItemFields.getID(fields[i][0]);
 					if (!fieldID) {
 						var fieldID = Zotero.ID.get('customFields');
-						yield Zotero.DB.queryAsync("INSERT INTO customFields VALUES (?, ?, ?)", [fieldID, fields[i][0], fields[i][1]]);
-						yield Zotero.DB.queryAsync("INSERT INTO customItemTypeFields VALUES (?, NULL, ?, 1, ?)", [itemTypeID, fieldID, i+1]);
+						await Zotero.DB.queryAsync("INSERT INTO customFields VALUES (?, ?, ?)", [fieldID, fields[i][0], fields[i][1]]);
+						await Zotero.DB.queryAsync("INSERT INTO customItemTypeFields VALUES (?, NULL, ?, 1, ?)", [itemTypeID, fieldID, i+1]);
 					}
 					else {
-						yield Zotero.DB.queryAsync("INSERT INTO customItemTypeFields VALUES (?, ?, NULL, 1, ?)", [itemTypeID, fieldID, i+1]);
+						await Zotero.DB.queryAsync("INSERT INTO customItemTypeFields VALUES (?, ?, NULL, 1, ?)", [itemTypeID, fieldID, i+1]);
 					}
 					
 					switch (fields[i][0]) {
@@ -763,11 +763,11 @@ Zotero.Schema = new function(){
 					}
 					
 					if (baseFieldID) {
-						yield Zotero.DB.queryAsync("INSERT INTO customBaseFieldMappings VALUES (?, ?, ?)", [itemTypeID, baseFieldID, fieldID]);
+						await Zotero.DB.queryAsync("INSERT INTO customBaseFieldMappings VALUES (?, ?, ?)", [itemTypeID, baseFieldID, fieldID]);
 					}
 				}
 				
-				yield _reloadSchema();
+				await _reloadSchema();
 			});
 			
 			var s = new Zotero.Search;
@@ -798,25 +798,25 @@ Zotero.Schema = new function(){
 			}
 			
 			Zotero.debug("Uninstalling nsfReviewer item type");
-			yield Zotero.DB.executeTransaction(function* () {
-				yield Zotero.DB.queryAsync("DELETE FROM customItemTypeFields WHERE customItemTypeID=?", itemTypeID - Zotero.ItemTypes.customIDOffset);
-				yield Zotero.DB.queryAsync("DELETE FROM customBaseFieldMappings WHERE customItemTypeID=?", itemTypeID - Zotero.ItemTypes.customIDOffset);
+			yield Zotero.DB.executeTransaction(async function () {
+				await Zotero.DB.queryAsync("DELETE FROM customItemTypeFields WHERE customItemTypeID=?", itemTypeID - Zotero.ItemTypes.customIDOffset);
+				await Zotero.DB.queryAsync("DELETE FROM customBaseFieldMappings WHERE customItemTypeID=?", itemTypeID - Zotero.ItemTypes.customIDOffset);
 				var fields = Zotero.ItemFields.getItemTypeFields(itemTypeID);
 				for (let fieldID of fields) {
 					if (Zotero.ItemFields.isCustom(fieldID)) {
-						yield Zotero.DB.queryAsync("DELETE FROM customFields WHERE customFieldID=?", fieldID - Zotero.ItemTypes.customIDOffset);
+						await Zotero.DB.queryAsync("DELETE FROM customFields WHERE customFieldID=?", fieldID - Zotero.ItemTypes.customIDOffset);
 					}
 				}
-				yield Zotero.DB.queryAsync("DELETE FROM customItemTypes WHERE customItemTypeID=?", itemTypeID - Zotero.ItemTypes.customIDOffset);
+				await Zotero.DB.queryAsync("DELETE FROM customItemTypes WHERE customItemTypeID=?", itemTypeID - Zotero.ItemTypes.customIDOffset);
 				
 				var searches = Zotero.Searches.getByLibrary(Zotero.Libraries.userLibraryID);
 				for (let search of searches) {
 					if (search.name == 'Overdue NSF Reviewers') {
-						yield search.erase();
+						await search.erase();
 					}
 				}
 				
-				yield _reloadSchema();
+				await _reloadSchema();
 			}.bind(this));
 			
 			ps.alert(null, "Zotero Item Type Removed", "The 'NSF Reviewer' item type has been uninstalled.");
@@ -1419,13 +1419,13 @@ Zotero.Schema = new function(){
 			}
 		}
 		
-		yield Zotero.DB.executeTransaction(function* () {
+		yield Zotero.DB.executeTransaction(async function () {
 			var sql = "REPLACE INTO version VALUES (?, ?)";
-			yield Zotero.DB.queryAsync(sql, [mode, modTime]);
+			await Zotero.DB.queryAsync(sql, [mode, modTime]);
 			
 			if (!skipVersionUpdates) {
 				sql = "REPLACE INTO version VALUES ('repository', ?)";
-				yield Zotero.DB.queryAsync(sql, repotime);
+				await Zotero.DB.queryAsync(sql, repotime);
 			}
 		});
 		
@@ -1969,18 +1969,18 @@ Zotero.Schema = new function(){
 			[
 				"SELECT COUNT(*) > 0 FROM creators WHERE fieldMode = 1 AND firstName != ''",
 				function () {
-					return Zotero.DB.executeTransaction(function* () {
-						var rows = yield Zotero.DB.queryAsync("SELECT * FROM creators WHERE fieldMode = 1 AND firstName != ''");
+					return Zotero.DB.executeTransaction(async function () {
+						var rows = await Zotero.DB.queryAsync("SELECT * FROM creators WHERE fieldMode = 1 AND firstName != ''");
 						for (let row of rows) {
 							// Find existing fieldMode 0 row and use that if available
-							let newID = yield Zotero.DB.valueQueryAsync("SELECT creatorID FROM creators WHERE firstName=? AND lastName=? AND fieldMode=0", [row.firstName, row.lastName]);
+							let newID = await Zotero.DB.valueQueryAsync("SELECT creatorID FROM creators WHERE firstName=? AND lastName=? AND fieldMode=0", [row.firstName, row.lastName]);
 							if (newID) {
-								yield Zotero.DB.queryAsync("UPDATE itemCreators SET creatorID=? WHERE creatorID=?", [newID, row.creatorID]);
-								yield Zotero.DB.queryAsync("DELETE FROM creators WHERE creatorID=?", row.creatorID);
+								await Zotero.DB.queryAsync("UPDATE itemCreators SET creatorID=? WHERE creatorID=?", [newID, row.creatorID]);
+								await Zotero.DB.queryAsync("DELETE FROM creators WHERE creatorID=?", row.creatorID);
 							}
 							// Otherwise convert this one to fieldMode 0
 							else {
-								yield Zotero.DB.queryAsync("UPDATE creators SET fieldMode=0 WHERE creatorID=?", row.creatorID);
+								await Zotero.DB.queryAsync("UPDATE creators SET fieldMode=0 WHERE creatorID=?", row.creatorID);
 							}
 						}
 					});
@@ -2186,44 +2186,44 @@ Zotero.Schema = new function(){
 	 * Create new DB schema
 	 */
 	async function _initializeSchema() {
-		await Zotero.DB.executeTransaction(function* (conn) {
+		await Zotero.DB.executeTransaction(async function (conn) {
 			var userLibraryID = 1;
 			
 			// Enable auto-vacuuming
-			yield Zotero.DB.queryAsync("PRAGMA page_size = 4096");
-			yield Zotero.DB.queryAsync("PRAGMA encoding = 'UTF-8'");
-			yield Zotero.DB.queryAsync("PRAGMA auto_vacuum = 1");
+			await Zotero.DB.queryAsync("PRAGMA page_size = 4096");
+			await Zotero.DB.queryAsync("PRAGMA encoding = 'UTF-8'");
+			await Zotero.DB.queryAsync("PRAGMA auto_vacuum = 1");
 			
-			yield _getSchemaSQL('system').then(function (sql) {
+			await _getSchemaSQL('system').then(function (sql) {
 				return Zotero.DB.executeSQLFile(sql);
 			});
-			yield _getSchemaSQL('userdata').then(function (sql) {
+			await _getSchemaSQL('userdata').then(function (sql) {
 				return Zotero.DB.executeSQLFile(sql);
 			});
-			yield _getSchemaSQL('triggers').then(function (sql) {
+			await _getSchemaSQL('triggers').then(function (sql) {
 				return Zotero.DB.executeSQLFile(sql);
 			});
 			
-			var schema = yield _readGlobalSchemaFromFile();
-			yield _updateGlobalSchema(schema);
+			var schema = await _readGlobalSchemaFromFile();
+			await _updateGlobalSchema(schema);
 			
-			yield _getSchemaSQLVersion('system').then(function (version) {
+			await _getSchemaSQLVersion('system').then(function (version) {
 				return _updateDBVersion('system', version);
 			});
-			yield _getSchemaSQLVersion('userdata').then(function (version) {
+			await _getSchemaSQLVersion('userdata').then(function (version) {
 				return _updateDBVersion('userdata', version);
 			});
-			yield _getSchemaSQLVersion('triggers').then(function (version) {
+			await _getSchemaSQLVersion('triggers').then(function (version) {
 				return _updateDBVersion('triggers', version);
 			});
 			
 			var sql = "INSERT INTO libraries (libraryID, type, editable, filesEditable) "
 				+ "VALUES "
 				+ "(?, 'user', 1, 1)";
-			yield Zotero.DB.queryAsync(sql, userLibraryID);
+			await Zotero.DB.queryAsync(sql, userLibraryID);
 			
-			yield _updateLastClientVersion();
-			yield _updateCompatibility(_maxCompatibility);
+			await _updateLastClientVersion();
+			await _updateCompatibility(_maxCompatibility);
 			
 			self.dbInitialized = true;
 		})
@@ -2290,8 +2290,8 @@ Zotero.Schema = new function(){
 	
 	
 	function _checkClientVersion() {
-		return Zotero.DB.executeTransaction(function* () {
-			var lastVersion = yield _getLastClientVersion();
+		return Zotero.DB.executeTransaction(async function () {
+			var lastVersion = await _getLastClientVersion();
 			var currentVersion = Zotero.version;
 			
 			if (currentVersion == lastVersion) {
@@ -2301,10 +2301,10 @@ Zotero.Schema = new function(){
 			Zotero.debug(`Client version has changed from ${lastVersion} to ${currentVersion}`);
 			
 			// Retry all queued objects immediately on upgrade
-			yield Zotero.Sync.Data.Local.resetSyncQueueTries();
+			await Zotero.Sync.Data.Local.resetSyncQueueTries();
 			
 			// Update version
-			yield _updateLastClientVersion();
+			await _updateLastClientVersion();
 			
 			return true;
 		}.bind(this));
@@ -2353,12 +2353,12 @@ Zotero.Schema = new function(){
 		var styleUpdates = xmlhttp.responseXML.getElementsByTagName('style');
 		
 		if (!translatorUpdates.length && !styleUpdates.length){
-			await Zotero.DB.executeTransaction(function* (conn) {
+			await Zotero.DB.executeTransaction(async function (conn) {
 				// Store the timestamp provided by the server
-				yield _updateDBVersion('repository', currentTime);
+				await _updateDBVersion('repository', currentTime);
 				
 				// And the local timestamp of the update time
-				yield _updateDBVersion('lastcheck', lastCheckTime);
+				await _updateDBVersion('lastcheck', lastCheckTime);
 			});
 			
 			Zotero.debug('All translators and styles are up-to-date');
@@ -2390,12 +2390,12 @@ Zotero.Schema = new function(){
 		}
 		
 		if (updated) {
-			await Zotero.DB.executeTransaction(function* (conn) {
+			await Zotero.DB.executeTransaction(async function (conn) {
 				// Store the timestamp provided by the server
-				yield _updateDBVersion('repository', currentTime);
+				await _updateDBVersion('repository', currentTime);
 				
 				// And the local timestamp of the update time
-				yield _updateDBVersion('lastcheck', lastCheckTime);
+				await _updateDBVersion('lastcheck', lastCheckTime);
 			});
 		}
 		

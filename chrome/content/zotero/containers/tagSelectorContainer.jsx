@@ -566,7 +566,7 @@ Zotero.TagSelector = class TagSelectorContainer extends React.PureComponent {
 			// Remove tags on Cmd-drag/Shift-drag
 			var remove = (Zotero.isMac && event.metaKey) || (!Zotero.isMac && event.shiftKey);
 			
-			return Zotero.DB.executeTransaction(function* () {
+			return Zotero.DB.executeTransaction(async function () {
 				ids = ids.split(',');
 				var items = Zotero.Items.get(ids);
 				var value = elem.textContent;
@@ -579,7 +579,7 @@ Zotero.TagSelector = class TagSelectorContainer extends React.PureComponent {
 					else {
 						item.addTag(value);
 					}
-					yield item.save();
+					await item.save();
 				}
 			}.bind(this));
 		}

@@ -2105,7 +2105,7 @@ Zotero.CollectionTreeView.prototype.drop = Zotero.Promise.coroutine(function* (r
 		
 		// Collection drag between libraries
 		if (targetLibraryID != droppedCollection.libraryID) {
-			yield Zotero.DB.executeTransaction(function* () {
+			yield Zotero.DB.executeTransaction(async function () {
 				var copyCollections = Zotero.Promise.coroutine(function* (descendents, parentID, addItems) {
 					for (var desc of descendents) {
 						// Collections
@@ -2165,10 +2165,10 @@ Zotero.CollectionTreeView.prototype.drop = Zotero.Promise.coroutine(function* (r
 				}];
 				
 				var addItems = new Map();
-				yield copyCollections(collections, targetCollectionID, addItems);
+				await copyCollections(collections, targetCollectionID, addItems);
 				for (let [collectionID, items] of addItems.entries()) {
-					let collection = yield Zotero.Collections.getAsync(collectionID);
-					yield collection.addItems(items);
+					let collection = await Zotero.Collections.getAsync(collectionID);
+					await collection.addItems(items);
 				}
 				
 				// TODO: add subcollections and subitems, if they don't already exist,
@@ -2292,10 +2292,10 @@ Zotero.CollectionTreeView.prototype.drop = Zotero.Promise.coroutine(function* (r
 				let lastWin = Services.wm.getMostRecentWindow("navigator:browser");
 				lastWin.openDialog('chrome://zotero/content/merge.xul', '', 'chrome,modal,centerscreen', io);
 				
-				yield Zotero.DB.executeTransaction(function* () {
+				yield Zotero.DB.executeTransaction(async function () {
 					// DEBUG: This probably needs to be updated if this starts being used
 					for (let obj of io.dataOut) {
-						yield obj.ref.save();
+						await obj.ref.save();
 					}
 				});
 			}
@@ -2304,9 +2304,9 @@ Zotero.CollectionTreeView.prototype.drop = Zotero.Promise.coroutine(function* (r
 		// Add items to target collection
 		if (targetCollectionID) {
 			let ids = newIDs.filter(itemID => Zotero.Items.get(itemID).isTopLevelItem());
-			yield Zotero.DB.executeTransaction(function* () {
-				let collection = yield Zotero.Collections.getAsync(targetCollectionID);
-				yield collection.addItems(ids);
+			yield Zotero.DB.executeTransaction(async function () {
+				let collection = await Zotero.Collections.getAsync(targetCollectionID);
+				await collection.addItems(ids);
 			}.bind(this));
 		}
 		else if (targetTreeRow.isPublications()) {
@@ -2321,8 +2321,8 @@ Zotero.CollectionTreeView.prototype.drop = Zotero.Promise.coroutine(function* (r
 			if (!sourceTreeRow || !sourceTreeRow.isCollection()) {
 				throw new Error("Drag source must be a collection for move action");
 			}
-			yield Zotero.DB.executeTransaction(function* () {
-				yield sourceTreeRow.ref.removeItems(toMove);
+			yield Zotero.DB.executeTransaction(async function () {
+				await sourceTreeRow.ref.removeItems(toMove);
 			}.bind(this));
 		}
 	}

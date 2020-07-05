@@ -460,11 +460,11 @@ Zotero.Items = function() {
 		);
 		
 		if (notesToUpdate.length) {
-			yield Zotero.DB.executeTransaction(function* () {
+			yield Zotero.DB.executeTransaction(async function () {
 				for (let i = 0; i < notesToUpdate.length; i++) {
 					let row = notesToUpdate[i];
 					let sql = "UPDATE itemNotes SET note=? WHERE itemID=?";
-					yield Zotero.DB.queryAsync(sql, [row[1], row[0]]);
+					await Zotero.DB.queryAsync(sql, [row[1], row[0]]);
 				}
 			}.bind(this));
 		}
@@ -903,7 +903,7 @@ Zotero.Items = function() {
 	this.merge = function (item, otherItems) {
 		Zotero.debug("Merging items");
 		
-		return Zotero.DB.executeTransaction(function* () {
+		return Zotero.DB.executeTransaction(async function () {
 			var otherItemIDs = [];
 			var itemURI = Zotero.URI.getItemURI(item);
 			
@@ -924,12 +924,12 @@ Zotero.Items = function() {
 				// Move child items to master
 				var ids = otherItem.getAttachments(true).concat(otherItem.getNotes(true));
 				for (let id of ids) {
-					var attachment = yield this.getAsync(id);
+					var attachment = await this.getAsync(id);
 					
 					// TODO: Skip identical children?
 					
 					attachment.parentID = item.id;
-					yield attachment.save();
+					await attachment.save();
 				}
 				
 				// Add relations to master
@@ -947,7 +947,7 @@ Zotero.Items = function() {
 				
 				// Update relations on items in the library that point to the other item
 				// to point to the master instead
-				let rels = yield Zotero.Relations.getByObject('item', otherItemURI);
+				let rels = await Zotero.Relations.getByObject('item', otherItemURI);
 				for (let rel of rels) {
 					// Skip merge-tracking relations, which are dealt with above
 					if (rel.predicate == replPred) continue;
@@ -994,13 +994,13 @@ Zotero.Items = function() {
 				
 				// Trash other item
 				otherItem.deleted = true;
-				yield otherItem.save();
+				await otherItem.save();
 			}
 			
 			item.setField('dateAdded', earliestDateAdded);
 			
 			for (let i in toSave) {
-				yield toSave[i].save();
+				await toSave[i].save();
 			}
 			
 			// Hack to remove master item from duplicates view without recalculating duplicates
@@ -1068,7 +1068,7 @@ Zotero.Items = function() {
 	
 	
 	this.trashTx = function (ids) {
-		return Zotero.DB.executeTransaction(function* () {
+		return Zotero.DB.executeTransaction(async function () {
 			return this.trash(ids);
 		}.bind(this));
 	}
@@ -1194,7 +1194,7 @@ Zotero.Items = function() {
 	this.addToPublications = function (items, options = {}) {
 		if (!items.length) return;
 		
-		return Zotero.DB.executeTransaction(function* () {
+		return Zotero.DB.executeTransaction(async function () {
 			var timestamp = Zotero.DB.transactionTimestamp;
 			
 			var allItems = [...items];
@@ -1238,7 +1238,7 @@ Zotero.Items = function() {
 				}
 			}
 			
-			yield Zotero.Utilities.Internal.forEachChunkAsync(allItems, 250, Zotero.Promise.coroutine(function* (chunk) {
+			await Zotero.Utilities.Internal.forEachChunkAsync(allItems, 250, Zotero.Promise.coroutine(function* (chunk) {
 				for (let item of chunk) {
 					item.setPublications(true);
 					item.synced = false;
@@ -1258,7 +1258,7 @@ Zotero.Items = function() {
 	
 	
 	this.removeFromPublications = function (items) {
-		return Zotero.DB.executeTransaction(function* () {
+		return Zotero.DB.executeTransaction(async function () {
 			let allItems = [];
 			for (let item of items) {
 				if (!item.inPublications) {
@@ -1279,7 +1279,7 @@ Zotero.Items = function() {
 			});
 			
 			var timestamp = Zotero.DB.transactionTimestamp;
-			yield Zotero.Utilities.Internal.forEachChunkAsync(allItems, 250, Zotero.Promise.coroutine(function* (chunk) {
+			await Zotero.Utilities.Internal.forEachChunkAsync(allItems, 250, Zotero.Promise.coroutine(function* (chunk) {
 				let idStr = chunk.map(item => item.id).join(", ");
 				yield Zotero.DB.queryAsync(
 					`UPDATE items SET synced=0, clientDateModified=? WHERE itemID IN (${idStr})`,
