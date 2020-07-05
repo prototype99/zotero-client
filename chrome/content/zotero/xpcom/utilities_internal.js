@@ -820,8 +820,7 @@ Zotero.Utilities.Internal = {
 	 * Returns a DOMDocument object not attached to any window
 	 */
 	"getDOMDocument": function() {
-		return Components.classes["@mozilla.org/xmlextras/domparser;1"]
-			.createInstance(Components.interfaces.nsIDOMParser)
+		return new DOMParser()
 			.parseFromString("<!DOCTYPE html><html></html>", "text/html");
 	},
 	
@@ -979,8 +978,7 @@ Zotero.Utilities.Internal = {
 			});
 			fr.readAsText(blob, charset);
 		});
-		var parser = Components.classes["@mozilla.org/xmlextras/domparser;1"]
-			.createInstance(Components.interfaces.nsIDOMParser);
+		var parser = new DOMParser();
 		var doc = parser.parseFromString(responseText, 'text/html');
 		return Zotero.HTTP.wrapDocument(doc, url);
 	},

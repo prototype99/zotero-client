@@ -2722,16 +2722,7 @@ Zotero.Translate.IO = {
 	 * Parses XML using DOMParser
 	 */
 	"parseDOMXML":function(input, charset, size) {
-		try {
-			var dp = new DOMParser();
-		} catch(e) {
-			try {
-				var dp = Components.classes["@mozilla.org/xmlextras/domparser;1"]
-				   .createInstance(Components.interfaces.nsIDOMParser);
-			} catch(e) {
-				throw new Error("DOMParser not supported");
-			}
-		}
+		var dp = new DOMParser();
 		
 		if(typeof input == "string") {
 			var nodes = dp.parseFromString(input, "text/xml");

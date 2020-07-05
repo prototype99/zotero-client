@@ -278,9 +278,7 @@ Zotero.QuickCopy = new function() {
 			
 			// If all notes, export full content
 			if (allNotes) {
-								var content = [];
-				let parser = Components.classes["@mozilla.org/xmlextras/domparser;1"]
-					.createInstance(Components.interfaces.nsIDOMParser);
+				let parser = new DOMParser();
 				let docHTML = '<html><body><div class="zotero-notes"/></body></html>';
 				let doc = parser.parseFromString(docHTML, 'text/html');
 				let textDoc = parser.parseFromString(docHTML, 'text/html');
