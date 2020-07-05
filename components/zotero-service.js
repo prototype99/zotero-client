@@ -498,7 +498,7 @@ function isLinux() {
 function ZoteroCommandLineHandler() {}
 ZoteroCommandLineHandler.prototype = {
 	/* nsICommandLineHandler */
-	handle : function(cmdLine) {
+	handle: async function (cmdLine) {
 		// Force debug output to window
 		if (cmdLine.handleFlag("ZoteroDebug", false)) {
 			zInitOptions.forceDebugLog = 2;
@@ -586,21 +586,55 @@ ZoteroCommandLineHandler.prototype = {
 				try {
 					let portOrPath = Services.prefs.getBranch('').getIntPref('devtools.debugger.remote-port');
 					
-					const { devtools } = Components.utils.import("resource://devtools/shared/Loader.jsm", {});
-					const { DebuggerServer } = devtools.require("devtools/server/main");
+					/*
 					
-					if (!DebuggerServer.initialized) {
-						dump("Initializing devtools server\n");
-						DebuggerServer.init();
-						DebuggerServer.registerAllActors();
-						DebuggerServer.allowChromeProcess = true;
+					// For Firefox 68
+					const { require, DevToolsLoader } = ChromeUtils.import(
+						"resource://devtools/shared/Loader.jsm"
+					);
+					const { DebuggerServer } = require("devtools/server/main");
+					const { SocketListener } = require("devtools/shared/security/socket");
+					
+					if (DebuggerServer.initialized) {
+						dump("Debugger server already initialized\n\n");
+						return;
 					}
 					
-					let listener = DebuggerServer.createListener();
-					listener.portOrPath = portOrPath;
-					listener.open();
+					DebuggerServer.init();
+					DebuggerServer.registerAllActors();
+					DebuggerServer.allowChromeProcess = true;
+					const socketOptions = { portOrPath };
+					const listener = new SocketListener(DebuggerServer, socketOptions);
+					await listener.open();
+					if (!DebuggerServer.listeningSockets) {
+						throw new Error("No listening sockets");
+					}
+					*/
 					
-					dump("Debugger server started on " + portOrPath + "\n\n");
+					// For Firefox 78
+					const { DevToolsLoader } = ChromeUtils.import(
+						"resource://devtools/shared/Loader.jsm"
+					);
+					const loader = new DevToolsLoader();
+					const { DevToolsServer } = loader.require("devtools/server/devtools-server");
+					const { SocketListener } = loader.require("devtools/shared/security/socket");
+					
+					if (DevToolsServer.initialized) {
+						dump("Debugger server already initialized\n\n");
+						return;
+					}
+					
+					DevToolsServer.init();
+					DevToolsServer.registerAllActors();
+					DevToolsServer.allowChromeProcess = true;
+					const socketOptions = { portOrPath };
+					const listener = new SocketListener(DevToolsServer, socketOptions);
+					await listener.open();
+					if (!DevToolsServer.listeningSockets) {
+						throw new Error("No listening sockets");
+					}
+					
+					dump(`Debugger server started on ${portOrPath}\n\n`);
 				}
 				catch (e) {
 					dump(e + "\n\n");
