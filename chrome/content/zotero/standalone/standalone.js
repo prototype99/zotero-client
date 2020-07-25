@@ -707,7 +707,7 @@ ZoteroStandalone.DebugOutput = {
 								return;
 							}
 							req.channel.notificationCallbacks = {
-								onProgress: function (request, context, progress, progressMax) {},
+								onProgress: function (request, progress, progressMax) {},
 								
 								// nsIInterfaceRequestor
 								getInterface: function (iid) {
