@@ -72,6 +72,12 @@
 	<!--<html:script src="chrome://global/content/inlineSpellCheckUI.js"></html:script>-->
 	
 	<html:script src="overlay.js"></html:script>
+	
+	<!-- Custom elements -->
+	<html:script src="chrome://global/content/customElements.js"></html:script>
+	<html:script src="elements/uiElement.js"></html:script>
+	<html:script src="elements/toolbarButton.js"></html:script>
+	
 	<html:script src="tabs.js"></html:script>
 	<html:script src="zoteroPane.js"></html:script>
 	<html:script src="itemPane.js"></html:script>
@@ -577,8 +583,19 @@
 							
 							<toolbar id="zotero-toolbar" class="toolbar toolbar-primary">
 								<hbox id="zotero-collections-toolbar" align="center">
-									<toolbarbutton id="zotero-tb-collection-add" class="zotero-tb-button" tooltiptext="&zotero.toolbar.newCollection.label;" command="cmd_zotero_newCollection"/>
-									<toolbarbutton id="zotero-tb-library-add-menu" class="zotero-tb-button" tooltiptext="&zotero.toolbar.newLibrary.label;" type="menu">
+									<html:toolbar-button
+										id="zotero-tb-collection-add"
+										class="zotero-tb-button"
+										tooltiptext="&zotero.toolbar.newCollection.label;"
+										command="cmd_zotero_newCollection"
+									/>
+									
+									<html:toolbar-button
+										id="zotero-tb-library-add-menu"
+										class="zotero-tb-button"
+										tooltiptext="&zotero.toolbar.newLibrary.label;"
+										type="menu"
+									>
 										<menupopup id="zotero-tb-library-add-popup">
 											<menuitem id="zotero-tb-group-add" label="&zotero.toolbar.newGroup;" oncommand="ZoteroPane_Local.newGroup()"/>
 											<menu id="zotero-tb-feed-add-menu" label="&zotero.toolbar.feeds.new;">
@@ -590,13 +607,21 @@
 												</menupopup>
 											</menu>
 										</menupopup>
-									</toolbarbutton>
+									</html:toolbar-button>
 								</hbox>
 								
 								<hbox id="zotero-items-toolbar" align="center">
-									<toolbarbutton id="zotero-tb-add" class="zotero-tb-button" tooltiptext="&zotero.toolbar.newItem.label;" type="menu"
-											onmousedown="if (this.disabled) { event.preventDefault(); return; }">
-										<menupopup onpopupshowing="ZoteroPane_Local.updateNewItemTypes()">
+									<html:toolbar-button
+										id="zotero-tb-add"
+										class="zotero-tb-button"
+										tooltiptext="&zotero.toolbar.newItem.label;"
+										type="menu"
+										onmousedown="if (this.disabled) { event.preventDefault(); return; }"
+									>
+										<menupopup
+											id="zotero-tb-add-popup"
+											onpopupshowing="ZoteroPane_Local.updateNewItemTypes()"
+										>
 											<menuseparator/>
 											<menuitem label="&zotero.toolbar.attachment.linked;" oncommand="ZoteroPane_Local.addAttachmentFromDialog(true);" tooltiptext=""/>
 											<menuitem label="&zotero.toolbar.attachment.add;" oncommand="ZoteroPane_Local.addAttachmentFromDialog();"  tooltiptext=""/>
@@ -605,10 +630,15 @@
 												<menupopup id="zotero-tb-add-more" onpopupshowing="event.stopPropagation()"/>
 											</menu>
 										</menupopup>
-									</toolbarbutton>
+									</html:toolbar-button>
 									
-									<toolbarbutton id="zotero-tb-lookup" class="zotero-tb-button" tooltiptext="&zotero.toolbar.lookup.label;" type="panel"
-											onmousedown="if (this.disabled) { event.preventDefault(); return; } Zotero_Lookup.showPanel(this)"/>
+									<html:toolbar-button
+										id="zotero-tb-lookup"
+										class="zotero-tb-button"
+										tooltiptext="&zotero.toolbar.lookup.label;"
+										type="panel"
+										onmousedown="Zotero_Lookup.handleToolbarButtonMouseDown(event)"
+									/>
 									
 									<panel id="zotero-lookup-panel" type="arrow" onpopupshown="Zotero_Lookup.onShowing(event)"
 											onpopuphidden="Zotero_Lookup.onHidden(event)">
@@ -635,24 +665,38 @@
 									</panel>
 									
 									<!--<toolbarbutton id="zotero-tb-note-add" class="zotero-tb-button" tooltiptext="&zotero.toolbar.note.standalone;" oncommand="ZoteroPane_Local.newNote(event.shiftKey);"/>-->
-									<toolbarbutton id="zotero-tb-note-add" class="zotero-tb-button" tooltiptext="&zotero.toolbar.newNote;" type="menu"
-											onmousedown="if (this.disabled) { event.preventDefault(); return; }">
+									<html:toolbar-button
+										id="zotero-tb-note-add"
+										class="zotero-tb-button"
+										tooltiptext="&zotero.toolbar.newNote;"
+										type="menu"
+										onmousedown="if (this.disabled) { event.preventDefault(); return; }"
+									>
 										<menupopup onpopupshowing="ZoteroPane_Local.updateNoteButtonMenu()">
 											<menuitem label="&zotero.toolbar.note.standalone;" command="cmd_zotero_newStandaloneNote"/>
 											<menuitem label="&zotero.toolbar.note.child;" command="cmd_zotero_newChildNote"/>
 										</menupopup>
-									</toolbarbutton>
-									<toolbarbutton id="zotero-tb-attachment-add" class="zotero-tb-button" tooltiptext="&zotero.items.menu.attach;" type="menu"
+									</html:toolbar-button>
+									
+									<html:toolbar-button id="zotero-tb-attachment-add" class="zotero-tb-button" tooltiptext="&zotero.items.menu.attach;" type="menu"
 											onmousedown="if (this.disabled) { event.preventDefault(); return; }">
 										<menupopup onpopupshowing="ZoteroPane_Local.updateAttachmentButtonMenu(this)">
 											<menuitem class="menuitem-iconic zotero-menuitem-attachments-web-link" label="&zotero.items.menu.attach.link.uri;" oncommand="var itemID = ZoteroPane_Local.getSelectedItems()[0].id; ZoteroPane_Local.addAttachmentFromURI(true, itemID);"/>
 											<menuitem class="menuitem-iconic zotero-menuitem-attachments-file" label="&zotero.items.menu.attach.file;" oncommand="var itemID = ZoteroPane_Local.getSelectedItems()[0].id; ZoteroPane_Local.addAttachmentFromDialog(false, itemID);"/>
 											<menuitem class="menuitem-iconic zotero-menuitem-attachments-link" label="&zotero.items.menu.attach.fileLink;" oncommand="var itemID = ZoteroPane_Local.getSelectedItems()[0].id; ZoteroPane_Local.addAttachmentFromDialog(true, itemID);" id="zotero-tb-attachment-add-file-link"/>
 										</menupopup>
-									</toolbarbutton>
+									</html:toolbar-button>
+									
 									<toolbarseparator/>
-									<toolbarbutton id="zotero-tb-advanced-search" class="zotero-tb-button" tooltiptext="&zotero.toolbar.advancedSearch;" command="cmd_zotero_advancedSearch"/>
+									
+									<html:toolbar-button
+										id="zotero-tb-advanced-search"
+										class="zotero-tb-button"
+										tooltiptext="&zotero.toolbar.advancedSearch;"
+										command="cmd_zotero_advancedSearch"/>
+									
 									<spacer flex="1"/>
+									
 									<image id="zotero-tb-search-spinner" class="zotero-spinner-14" style="display: none"/>
 									<textbox id="zotero-tb-search" type="search" timeout="250"
 											onkeypress="ZoteroPane_Local.handleSearchKeypress(this, event)"
@@ -662,20 +706,24 @@
 								
 								<hbox id="zotero-item-toolbar" flex="1" align="center" tooltip="html-tooltip">
 									<hbox align="center" pack="start" flex="1">
-										<toolbarbutton id="zotero-tb-locate" class="zotero-tb-button" tooltiptext="&zotero.toolbar.openURL.label;" type="menu">
+										<html:toolbar-button id="zotero-tb-locate" class="zotero-tb-button" tooltiptext="&zotero.toolbar.openURL.label;" type="menu">
 											<menupopup id="zotero-tb-locate-menu" onpopupshowing="Zotero_LocateMenu.buildLocateMenu()"/>
-										</toolbarbutton>
+										</html:toolbar-button>
 									</hbox>
 									<hbox align="center" pack="end">
-										<toolbarbutton id="zotero-tb-sync-stop"
+										<html:toolbar-button
+											id="zotero-tb-sync-stop"
 											tooltiptext="&zotero.sync.stop;"
 											oncommand="this.hidden = true; Zotero.Sync.Runner.stop()"
-											hidden="true"/>
+											hidden="true"
+										/>
 										<hbox id="zotero-tb-sync-progress-box" hidden="true" align="center">
 											<!-- TODO: localize -->
-											<toolbarbutton id="zotero-tb-sync-storage-cancel"
+											<html:toolbar-button
+												id="zotero-tb-sync-storage-cancel"
 												tooltiptext="Stop sync"
-												oncommand="Zotero.Sync.Runner.stop()"/>
+												oncommand="Zotero.Sync.Runner.stop()"
+											/>
 											<progressmeter id="zotero-tb-sync-progress" mode="determined"
 												value="0" tooltip="zotero-tb-sync-progress-tooltip">
 											</progressmeter>
@@ -692,7 +740,10 @@
 									<hbox id="zotero-pq-buttons">
 									</hbox>
 				
-									<toolbarbutton id="zotero-tb-sync-error" hidden="true"/>
+									<html:toolbar-button
+										id="zotero-tb-sync-error"
+										hidden="true"
+									/>
 									
 									<!--
 										We put this here, but it can be used wherever
@@ -700,8 +751,12 @@
 									-->
 									<panel id="zotero-sync-error-panel" type="arrow"/>
 									
-									<toolbarbutton id="zotero-tb-sync" class="zotero-tb-button" tooltip="_child"
-											oncommand="Zotero.Sync.Server.canAutoResetClient = true; Zotero.Sync.Server.manualSyncRequired = false; Zotero.Sync.Runner.sync()">
+										<html:toolbar-button
+											id="zotero-tb-sync"
+											class="zotero-tb-button"
+											tooltip="_child"
+											oncommand="Zotero.Sync.Server.canAutoResetClient = true; Zotero.Sync.Server.manualSyncRequired = false; Zotero.Sync.Runner.sync()"
+										>
 										<tooltip
 												id="zotero-tb-sync-tooltip"
 												onpopupshowing="Zotero.Sync.Runner.registerSyncStatus(this)"
@@ -712,7 +767,7 @@
 											<label id="zotero-tb-sync-last-sync"/>
 											<div xmlns="http://www.w3.org/1999/xhtml" class="sync-button-tooltip-messages"/>
 										</tooltip>
-									</toolbarbutton>
+									</html:toolbar-button>
 								</hbox>
 							</toolbar>
 							

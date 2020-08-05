@@ -304,7 +304,7 @@ var ZoteroPane = new function()
 		});
 		
 		for (var i = 0; i<itemTypes.length; i++) {
-			var menuitem = document.createElement("menuitem");
+			var menuitem = document.createXULElement("menuitem");
 			menuitem.setAttribute("label", itemTypes[i].localized);
 			menuitem.setAttribute("tooltiptext", "");
 			let type = itemTypes[i].id;
@@ -315,7 +315,7 @@ var ZoteroPane = new function()
 	
 	
 	this.updateNewItemTypes = function () {
-		var addMenu = document.getElementById('zotero-tb-add').firstChild;
+		var addMenu = document.getElementById('zotero-tb-add-popup');
 		
 		// Remove all nodes so we can regenerate
 		var options = addMenu.getElementsByAttribute("class", "zotero-tb-add");
@@ -342,7 +342,7 @@ var ZoteroPane = new function()
 		});
 		
 		for (var i = 0; i<itemTypes.length; i++) {
-			var menuitem = document.createElement("menuitem");
+			var menuitem = document.createXULElement("menuitem");
 			menuitem.setAttribute("label", itemTypes[i].localized);
 			menuitem.setAttribute("tooltiptext", "");
 			let type = itemTypes[i].id;
