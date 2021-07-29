@@ -348,6 +348,11 @@
 	--image: url('chrome://zotero/skin/toolbar-lookup.png');
 }
 
+#zotero-lookup-multiline-progress
+{
+	height: 2em;
+}
+
 /*
 #zotero-tb-link-page
 {
