@@ -1332,8 +1332,8 @@ var ZoteroPane = new function()
 			try {
 				let tree = document.getElementById('zotero-items-tree');
 				let treecols = document.getElementById('zotero-items-columns-header');
-				let treecolpicker = treecols.boxObject.firstChild.nextSibling;
-				let menupopup = treecolpicker.boxObject.firstChild.nextSibling;
+				let treecolpicker = treecols.querySelector('treecolpicker');
+				let menupopup = treecolpicker.querySelector('menupopup');
 				// Add events to treecolpicker to update menu before showing/hiding
 				let attr = menupopup.getAttribute('onpopupshowing');
 				if (attr.indexOf('Zotero') == -1) {
@@ -5365,7 +5365,7 @@ var ZoteroPane = new function()
 		var itemToolbar = document.getElementById("zotero-item-toolbar");
 		var tagSelector = document.getElementById("zotero-tag-selector");
 		
-		var collectionsPaneWidth = collectionsPane.boxObject.width + 'px';
+		var collectionsPaneWidth = collectionsPane.getBoundingClientRect().width + 'px';
 		collectionsToolbar.style.width = collectionsPaneWidth;
 		tagSelector.style.maxWidth = collectionsPaneWidth;
 		
@@ -5374,10 +5374,10 @@ var ZoteroPane = new function()
 			itemsToolbar.setAttribute("flex", "1");
 			itemToolbar.setAttribute("flex", "0");
 		} else {
-			var itemsToolbarWidth = itemsPane.boxObject.width;
+			var itemsToolbarWidth = itemsPane.getBoundingClientRect().width;
 
 			if (collectionsPane.collapsed) {
-				itemsToolbarWidth -= collectionsToolbar.boxObject.width;
+				itemsToolbarWidth -= collectionsToolbar.getBoundingClientRect().width;
 			}
 			// Not sure why this is necessary, but it keeps the search bar from overflowing into the
 			// right-hand pane
