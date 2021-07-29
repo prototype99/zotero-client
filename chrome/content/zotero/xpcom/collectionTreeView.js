@@ -124,7 +124,8 @@ Zotero.CollectionTreeView.prototype.setTree = Zotero.Promise.coroutine(function*
 		if (!this._treebox.columns) {
 			return;
 		}
-		this.selection.currentColumn = this._treebox.columns.getFirstColumn();
+		// TEMP: Fx78
+		//this.selection.currentColumn = this._treebox.columns.getFirstColumn();
 		
 		var lastViewedID = Zotero.Prefs.get('lastViewedFolder');
 		if (lastViewedID) {
