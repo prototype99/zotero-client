@@ -5142,7 +5142,7 @@ var ZoteroPane = new function()
 		
 		var title = stringBundle.GetStringFromName('general.error');
 		if (!errMsg) {
-			var errMsg = stringBundle.GetStringFromName('startupError');
+			var errMsg = stringBundle.formatStringFromName('startupError', [Zotero.appName], 1);
 		}
 		
 		if (errFunc) {
