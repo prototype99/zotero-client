@@ -84,9 +84,11 @@ var Scaffold = new function() {
 		let browserUrl = document.getElementById("browser-url");
 		browserUrl.addEventListener('keypress', function(e) {
 			if (e.keyCode == e.DOM_VK_RETURN) {
-				_browser.loadURIWithFlags(
+				_browser.loadURI(
 					browserUrl.value,
-					Components.interfaces.nsIWebNavigation.LOAD_FLAGS_BYPASS_CACHE
+					{
+						flags: Components.interfaces.nsIWebNavigation.LOAD_FLAGS_BYPASS_CACHE,
+					},
 				);
 			}
 		});
@@ -1131,9 +1133,11 @@ var Scaffold = new function() {
 		}
 		else {
 			var tabs = document.getElementById('tabs');
-			_browser.loadURIWithFlags(
+			_browser.loadURI(
 				url,
-				Components.interfaces.nsIWebNavigation.LOAD_FLAGS_BYPASS_CACHE
+				{
+					flags: Components.interfaces.nsIWebNavigation.LOAD_FLAGS_BYPASS_CACHE,
+				},
 			);
 			tabs.selectedItem = document.getElementById('tab-browser');
 		}

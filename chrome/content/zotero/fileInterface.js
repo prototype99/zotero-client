@@ -792,8 +792,10 @@ var Zotero_File_Interface = new function() {
 			}
 			
 			browser.addEventListener("pageshow", listener, false);
-			browser.loadURIWithFlags("data:text/html;charset=utf-8,"+encodeURI(bibliography),
-				Components.interfaces.nsIWebNavigation.LOAD_FLAGS_BYPASS_HISTORY, null, "utf-8", null);
+			browser.loadURI("data:text/html;charset=utf-8,"+encodeURI(bibliography), {
+				flags: Components.interfaces.nsIWebNavigation.LOAD_FLAGS_BYPASS_HISTORY,
+				charset: "utf-8",
+			});
 		} else if(io.method == "save-as-html") {
 			let fStream = await _saveBibliography(name, "HTML");
 			
