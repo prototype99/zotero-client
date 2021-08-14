@@ -1320,7 +1320,9 @@ Zotero.File = new function(){
 			Zotero.Browser.deleteHiddenBrowser(browser);
 		}, args);
 		
-		browser.loadURI(url);
+		browser.loadURI(url, {
+			triggeringPrincipal: Services.scriptSecurityManager.createNullPrincipal({}),
+		});
 	}
 	
 	

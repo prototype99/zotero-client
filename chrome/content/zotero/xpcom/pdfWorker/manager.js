@@ -405,7 +405,9 @@ class PDFRenderer {
 				if (this._browser.contentWindow.location.href === 'about:blank') return;
 				this._browser.contentWindow.addEventListener('message', _handleMessage);
 			});
-			this._browser.loadURI(RENDERER_URL);
+			this._browser.loadURI(RENDERER_URL, {
+				triggeringPrincipal: Services.scriptSecurityManager.getSystemPrincipal(),
+			});
 
 			let _handleMessage = async (event) => {
 				if (event.source !== this._browser.contentWindow) {

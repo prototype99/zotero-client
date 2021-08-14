@@ -791,7 +791,7 @@
 					this._iframe.addEventListener("DOMContentLoaded", listener, false);
 					
 					let loadURIOptions = {
-						triggeringPrincipal: null,
+						triggeringPrincipal: Services.scriptSecurityManager.createNullPrincipal({}),
 						csp: null,
 						loadFlags: Components.interfaces.nsIWebNavigation.LOAD_FLAGS_BYPASS_HISTORY,
 						referrerInfo: null,

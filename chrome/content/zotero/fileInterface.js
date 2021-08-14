@@ -793,6 +793,7 @@ var Zotero_File_Interface = new function() {
 			
 			browser.addEventListener("pageshow", listener, false);
 			browser.loadURI("data:text/html;charset=utf-8,"+encodeURI(bibliography), {
+				triggeringPrincipal: Services.scriptSecurityManager.getSystemPrincipal(),
 				flags: Components.interfaces.nsIWebNavigation.LOAD_FLAGS_BYPASS_HISTORY,
 				charset: "utf-8",
 			});
@@ -898,16 +899,21 @@ var Zotero_File_Interface = new function() {
 	this.authenticateMendeleyOnline = function () {
 		const uri = `https://api.mendeley.com/oauth/authorize?client_id=5907&redirect_uri=https%3A%2F%2Fzotero-static.s3.amazonaws.com%2Fmendeley_oauth_redirect.html&response_type=code&state=&scope=all`;
 		var win = Services.wm.getMostRecentWindow("zotero:basicViewer");
+		const options = {
+			triggeringPrincipal: Services.scriptSecurityManager.getSystemPrincipal(),
+		};
 		if (win) {
-			win.loadURI(uri);
+			win.loadURI(uri, options);
 		}
 		else {
-			const ww = Services.ww;
-			const arg = Components.classes["@mozilla.org/supports-string;1"]
+			const uriString = Cc["@mozilla.org/supports-string;1"]
 				.createInstance(Components.interfaces.nsISupportsString);
-			arg.data = uri;
-			win = ww.openWindow(null, "chrome://zotero/content/standalone/basicViewer.xhtml",
-				"basicViewer", "chrome,dialog=yes,resizable,centerscreen,menubar,scrollbars", arg);
+			uriString.data = uri;
+			const args = Cc["@mozilla.org/array;1"].createInstance(Ci.nsIMutableArray);
+			args.appendElement(uriString);
+			args.appendElement(options);
+			win = Services.ww.openWindow(null, "chrome://zotero/content/standalone/basicViewer.xhtml",
+				"basicViewer", "chrome,dialog=yes,resizable,centerscreen,menubar,scrollbars", args);
 		}
 
 		let browser;

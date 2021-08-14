@@ -138,11 +138,21 @@ var Zotero_Preferences = {
 		
 		if(Zotero.isStandalone) {
 			var win = wm.getMostRecentWindow("zotero:basicViewer");
-			if(win) {
-				win.loadURI(uri);
-			} else {
-				window.openDialog("chrome://zotero/content/standalone/basicViewer.xhtml",
-					"basicViewer", "chrome,resizable,centerscreen,menubar,scrollbars", uri);
+			const options = {
+				triggeringPrincipal: Services.scriptSecurityManager.getSystemPrincipal(),
+			};
+			if (win) {
+				win.loadURI(uri, options);
+			}
+			else {
+				const uriString = Cc["@mozilla.org/supports-string;1"]
+					.createInstance(Components.interfaces.nsISupportsString);
+				uriString.data = uri;
+				const args = Cc["@mozilla.org/array;1"].createInstance(Ci.nsIMutableArray);
+				args.appendElement(uriString);
+				args.appendElement(options);
+				win = Services.ww.openWindow(null, "chrome://zotero/content/standalone/basicViewer.xhtml",
+					"basicViewer", "chrome,dialog=yes,resizable,centerscreen,menubar,scrollbars", args);
 			}
 		} else {
 			var win = wm.getMostRecentWindow("navigator:browser");

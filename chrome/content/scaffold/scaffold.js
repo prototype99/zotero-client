@@ -87,6 +87,7 @@ var Scaffold = new function() {
 				_browser.loadURI(
 					browserUrl.value,
 					{
+						triggeringPrincipal: Services.scriptSecurityManager.getSystemPrincipal(),
 						flags: Components.interfaces.nsIWebNavigation.LOAD_FLAGS_BYPASS_CACHE,
 					},
 				);
@@ -1136,6 +1137,7 @@ var Scaffold = new function() {
 			_browser.loadURI(
 				url,
 				{
+					triggeringPrincipal: Services.scriptSecurityManager.getSystemPrincipal(),
 					flags: Components.interfaces.nsIWebNavigation.LOAD_FLAGS_BYPASS_CACHE,
 				},
 			);

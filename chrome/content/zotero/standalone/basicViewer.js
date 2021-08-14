@@ -39,7 +39,9 @@ window.addEventListener("load", function() {
 	}, false);
 	
 	// show document
-	browser.loadURI.apply(browser, window.arguments);
+	const url = window.arguments[0];
+	const options = window.arguments[1] ? window.arguments[1].wrappedJSObject : undefined;
+	browser.loadURI(url, options);
 	
 	// XXX Why is this necessary to make the scroll bars appear?
 	window.setTimeout(function() {

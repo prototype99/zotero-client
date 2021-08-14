@@ -2847,7 +2847,9 @@ Zotero.Attachments = new function(){
 			var url = Components.classes["@mozilla.org/network/protocol;1?name=file"]
 						.getService(Components.interfaces.nsIFileProtocolHandler)
 						.getURLSpecFromFile(file);
-			browser.loadURI(url);
+			browser.loadURI(url, {
+				triggeringPrincipal: Services.scriptSecurityManager.createNullPrincipal({}),
+			});
 			
 			// Avoid a hang if a pageshow is never called on the hidden browser (which can happen
 			// if a .pdf file is really HTML, which can also result in the file being launched,

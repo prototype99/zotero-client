@@ -1106,16 +1106,21 @@ Services.scriptloader.loadSubScript("resource://zotero/polyfill.js");
 	this.openInViewer = function (uri, onLoad) {
 		var wm = Services.wm;
 		var win = wm.getMostRecentWindow("zotero:basicViewer");
+		const options = {
+			triggeringPrincipal: Services.scriptSecurityManager.getSystemPrincipal(),
+		};
 		if (win) {
-			win.loadURI(uri);
-		} else {
-			let ww = Components.classes['@mozilla.org/embedcomp/window-watcher;1']
-				.getService(Components.interfaces.nsIWindowWatcher);
-			let arg = Components.classes["@mozilla.org/supports-string;1"]
+			win.loadURI(uri, options);
+		}
+		else {
+			const uriString = Cc["@mozilla.org/supports-string;1"]
 				.createInstance(Components.interfaces.nsISupportsString);
-			arg.data = uri;
-			win = ww.openWindow(null, "chrome://zotero/content/standalone/basicViewer.xhtml",
-				"basicViewer", "chrome,dialog=yes,resizable,centerscreen,menubar,scrollbars", arg);
+			uriString.data = uri;
+			const args = Cc["@mozilla.org/array;1"].createInstance(Ci.nsIMutableArray);
+			args.appendElement(uriString);
+			args.appendElement(options);
+			win = Services.ww.openWindow(null, "chrome://zotero/content/standalone/basicViewer.xhtml",
+				"basicViewer", "chrome,dialog=yes,resizable,centerscreen,menubar,scrollbars", args);
 		}
 		if (onLoad) {
 			let browser

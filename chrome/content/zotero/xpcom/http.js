@@ -1176,7 +1176,7 @@ Zotero.HTTP = new function() {
 				try {
 					Zotero.debug("Zotero.HTTP.loadDocuments: Loading " + url);
 					let loadURIOptions = {
-						triggeringPrincipal: null,
+						triggeringPrincipal: Services.scriptSecurityManager.createNullPrincipal({}),
 						csp: null,
 						loadFlags: Components.interfaces.nsIWebNavigation.LOAD_FLAGS_BYPASS_HISTORY,
 						referrerInfo: null,
