@@ -840,7 +840,11 @@ ZoteroStandalone.DebugOutput = {
 
 
 function toJavaScriptConsole() {
-	openWindowByType('chrome://global/content/console.xul', 'global:console');
+	const { require } = ChromeUtils.import(
+		"resource://devtools/shared/Loader.jsm"
+	);
+	const { BrowserConsoleManager } = require("devtools/client/webconsole/browser-console-manager");
+	BrowserConsoleManager.openBrowserConsoleOrFocus();
 }
 
 function openRunJSWindow() {
