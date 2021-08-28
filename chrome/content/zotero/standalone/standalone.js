@@ -865,7 +865,7 @@ function openStyleEditor() {
 
 function openScaffold() {
 	openWindowByType(
-		'chrome://scaffold/content/scaffold.xul',
+		'chrome://scaffold/content/scaffold.xhtml',
 		'zotero:scaffold',
 		'chrome,resizable'
 	);
