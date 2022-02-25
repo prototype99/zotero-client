@@ -5422,7 +5422,7 @@ var ZoteroPane = new function()
 	 * Opens the about dialog
 	 */
 	this.openAboutDialog = function() {
-		window.openDialog('chrome://zotero/content/about.xul', 'about', 'chrome,centerscreen');
+		window.openDialog('chrome://zotero/content/about.xhtml', 'about', 'chrome,centerscreen');
 	}
 	
 	/**
