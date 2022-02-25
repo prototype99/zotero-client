@@ -316,6 +316,10 @@ zoterosearch .menulist-icon {
 	max-width: 16px;
 }
 
+.flex-1 {
+	-moz-box-flex: 1;
+}
+
 
 /* BEGIN 2X BLOCK -- DO NOT EDIT MANUALLY -- USE 2XIZE */
 @media (min-resolution: 1.25dppx) {

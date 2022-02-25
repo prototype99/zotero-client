@@ -2426,7 +2426,7 @@ var ZoteroPane = new function()
 	this.onCollectionsContextMenuOpen = async function (event) {
 		await ZoteroPane.buildCollectionContextMenu();
 		document.getElementById('zotero-collectionmenu').openPopup(
-			null, null, event.clientX + 1, event.clientY + 1, true, false, event
+			null, "", event.clientX + 1, event.clientY + 1, true, false, event
 		);
 	};
 	
@@ -2437,7 +2437,7 @@ var ZoteroPane = new function()
 	this.onItemsContextMenuOpen = async function (event) {
 		await ZoteroPane.buildItemContextMenu()
 		document.getElementById('zotero-itemmenu').openPopup(
-			null, null, event.clientX + 1, event.clientY + 1, true, false, event
+			null, "", event.clientX + 1, event.clientY + 1, true, false, event
 		);
 	};
 	
@@ -3724,7 +3724,7 @@ var ZoteroPane = new function()
 		}
 		
 		var io = {};
-		window.openDialog('chrome://zotero/content/attachLink.xul',
+		window.openDialog('chrome://zotero/content/attachLink.xhtml',
 			'zotero-attach-uri-dialog', 'centerscreen, modal', io);
 		if (!io.out) return;
 		return Zotero.Attachments.linkFromURL({
@@ -4125,8 +4125,6 @@ var ZoteroPane = new function()
 			let item = items[i];
 			if (item.isRegularItem()) {
 				// Prefer local file attachments
-				var uri = Components.classes["@mozilla.org/network/standard-url;1"]
-							.createInstance(Components.interfaces.nsIURI);
 				let attachment = yield item.getBestAttachment();
 				if (attachment) {
 					yield this.viewAttachment(attachment.id, event);

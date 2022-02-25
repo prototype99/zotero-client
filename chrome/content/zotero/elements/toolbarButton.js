@@ -144,7 +144,7 @@ class ToolbarButton extends UIElement {
 				this.onclick = function (event) {
 					event.stopPropagation();
 					event.preventDefault();
-					new Function(cmd.getAttribute('oncommand'))();
+					cmd.dispatchEvent(new Event('command'));
 				};
 			}
 		}
