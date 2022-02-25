@@ -304,7 +304,7 @@ Zotero.IPC = new function() {
 		
 		// get possible names for libc
 		if(Zotero.isMac) {
-			var possibleLibcs = ["/usr/lib/libc.dylib"];
+			var possibleLibcs = ["libc.dylib"];
 		} else {
 			var possibleLibcs = [
 				"libc.so.6",
