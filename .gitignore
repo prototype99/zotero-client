@@ -3,3 +3,7 @@ node_modules
 build
 .signatures.json
 tmp
+
+test/resource/chai
+
+test/resource/mocha
