@@ -1,0 +1,15 @@
+[remote "upstream"]
+	url = git@github.com:zotero/zotero.git
+	fetch = +refs/heads/*:refs/remotes/upstream/*
+[remote "mrtcode"]
+	url = git@github.com:mrtcode/zotero.git
+	fetch = +refs/heads/*:refs/remotes/mrtcode/*
+[remote "dstillman"]
+	url = git@github.com:dstillman/zotero.git
+	fetch = +refs/heads/*:refs/remotes/dstillman/*
+[remote "AbeJellinek"]
+	url = git@github.com:AbeJellinek/zotero.git
+	fetch = +refs/heads/*:refs/remotes/AbeJellinek/*
+[remote "invisprints"]
+	url = git@github.com:invisprints/zotero.git
+	fetch = +refs/heads/*:refs/remotes/invisprints/* 
