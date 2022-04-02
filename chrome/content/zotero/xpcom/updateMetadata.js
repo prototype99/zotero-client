@@ -37,7 +37,7 @@ Zotero.UpdateMetadata = new function () {
 			let row = _rows.find(row => row.itemID === itemID);
 			if (row) {
 				// Toggle all if no field is passed or item type is changed
-				if (!fieldName || _isItemTypeChanged(row)) {
+				if (!fieldName) {
 					let hasEnabledFields = row.fields.find(field => !field.isDisabled);
 					row.fields.forEach(field => field.isDisabled = hasEnabledFields);
 				}
