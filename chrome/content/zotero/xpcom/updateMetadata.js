@@ -690,6 +690,16 @@ Zotero.UpdateMetadata = new function () {
 	}
 
 	/**
+	 * Return the supported  field names for an item's type
+	 * @param {Zotero.Item} item
+	 * @return {fieldName[]}
+	 */
+	function _supportedFieldNamesMap(item) {
+		let supportedFieldNames = Zotero.ItemFields.getItemTypeFields(item.itemTypeID);
+		return supportedFieldNames.map(x => Zotero.ItemFields.getName(x));
+	}
+
+	/**
 	 * Apply accepted fields to existing items
 	 * @returns {Promise}
 	 * @private
@@ -717,8 +727,7 @@ Zotero.UpdateMetadata = new function () {
 			]);
 		}
 
-		let supportedFieldNames = Zotero.ItemFields.getItemTypeFields(item.itemTypeID);
-		supportedFieldNames = supportedFieldNames.map(x => Zotero.ItemFields.getName(x));
+		let supportedFieldNames = _supportedFieldNamesMap(item);
 
 		for (let field of row.fields) {
 			if (!field.isDisabled && supportedFieldNames.includes(field.fieldName)) {
