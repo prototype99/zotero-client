@@ -29,14 +29,6 @@
 [submodule "resource/SingleFile"]
 	path = resource/SingleFile
 	url = https://github.com/gildas-lormeau/SingleFile.git
-[submodule "pdf-reader"]
-	path = pdf-reader
-	url = https://github.com/zotero/pdf-reader.git
-	branch = master
-[submodule "pdf-worker"]
-	path = pdf-worker
-	url = https://github.com/zotero/pdf-worker.git
-	branch = master
 [submodule "note-editor"]
 	path = note-editor
 	url = https://github.com/zotero/note-editor.git
@@ -47,3 +39,9 @@
 [submodule "chrome/content/zotero/xpcom/translate"]
 	path = chrome/content/zotero/xpcom/translate
 	url = https://github.com/zotero/translate.git
+[submodule "pdf-reader"]
+	path = pdf-reader
+	url = https://github.com/prototype99/pdf-reader.git
+[submodule "pdf-worker"]
+	path = pdf-worker
+	url = https://github.com/prototype99/pdf-worker.git
