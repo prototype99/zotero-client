@@ -13,3 +13,567 @@
 [remote "invisprints"]
 	url = git@github.com:invisprints/zotero.git
 	fetch = +refs/heads/*:refs/remotes/invisprints/* 
+[remote "singingfish"]
+	url = git@github.com:singingfish/zotero.git
+	fetch = +refs/heads/*:refs/remotes/singingfish/*
+[remote "avram"]
+	url = git@github.com:avram/zotero.git
+	fetch = +refs/heads/*:refs/remotes/avram/*
+[remote "rmzelle"]
+	url = git@github.com:rmzelle/zotero.git
+	fetch = +refs/heads/*:refs/remotes/rmzelle/*
+[remote "robinpaulson"]
+	url = git@github.com:robinpaulson/impero.git
+	fetch = +refs/heads/*:refs/remotes/robinpaulson/*
+[remote "smjwsk"]
+	url = git@github.com:smjwsk/zotero.git
+	fetch = +refs/heads/*:refs/remotes/smjwsk/*
+[remote "fcheslack"]
+	url = git@github.com:fcheslack/zotero.git
+	fetch = +refs/heads/*:refs/remotes/fcheslack/*
+[remote "mronkko"]
+	url = git@github.com:mronkko/zotero.git
+	fetch = +refs/heads/*:refs/remotes/mronkko/*
+[remote "wang3feng"]
+	url = git@github.com:wang3feng/zotero.git
+	fetch = +refs/heads/*:refs/remotes/wang3feng/*
+[remote "iosonofabio"]
+	url = git@github.com:iosonofabio/zotero.git
+	fetch = +refs/heads/*:refs/remotes/iosonofabio/*
+[remote "gracile-fr"]
+	url = git@github.com:gracile-fr/zotero.git
+	fetch = +refs/heads/*:refs/remotes/gracile-fr/*
+[remote "aurimasv"]
+	url = git@github.com:aurimasv/zotero.git
+	fetch = +refs/heads/*:refs/remotes/aurimasv/*
+[remote "NEWille"]
+	url = git@github.com:NEWille/zotero.git
+	fetch = +refs/heads/*:refs/remotes/NEWille/*
+[remote "nchachereau"]
+	url = git@github.com:nchachereau/zotero.git
+	fetch = +refs/heads/*:refs/remotes/nchachereau/*
+[remote "dankessler"]
+	url = git@github.com:dankessler/zotero.git
+	fetch = +refs/heads/*:refs/remotes/dankessler/*
+[remote "simonster"]
+	url = git@github.com:simonster/zotero.git
+	fetch = +refs/heads/*:refs/remotes/simonster/*
+[remote "fbennett"]
+	url = git@github.com:fbennett/zotero.git
+	fetch = +refs/heads/*:refs/remotes/fbennett/*
+[remote "sirbassknocker"]
+	url = git@github.com:sirbassknocker/zotero.git
+	fetch = +refs/heads/*:refs/remotes/sirbassknocker/*
+[remote "Panzerkampfwagen"]
+	url = git@github.com:Panzerkampfwagen/zotero.git
+	fetch = +refs/heads/*:refs/remotes/Panzerkampfwagen/*
+[remote "sss"]
+	url = git@github.com:sss/zotero.git
+	fetch = +refs/heads/*:refs/remotes/sss/*
+[remote "wishqube"]
+	url = git@github.com:wishqube/zotero.git
+	fetch = +refs/heads/*:refs/remotes/wishqube/*
+[remote "jgrigera"]
+	url = git@github.com:jgrigera/zotero.git
+	fetch = +refs/heads/*:refs/remotes/jgrigera/*
+[remote "corajr"]
+	url = git@github.com:corajr/zotero.git
+	fetch = +refs/heads/*:refs/remotes/corajr/*
+[remote "qualton"]
+	url = git@github.com:qualton/zotero.git
+	fetch = +refs/heads/*:refs/remotes/qualton/*
+[remote "fadishei"]
+	url = git@github.com:fadishei/zotero.git
+	fetch = +refs/heads/*:refs/remotes/fadishei/*
+[remote "haass"]
+	url = git@github.com:haass/zotero.git
+	fetch = +refs/heads/*:refs/remotes/haass/*
+[remote "JohnnyPP"]
+	url = git@github.com:JohnnyPP/zotero.git
+	fetch = +refs/heads/*:refs/remotes/JohnnyPP/*
+[remote "alexeicolin"]
+	url = git@github.com:alexeicolin/zotero.git
+	fetch = +refs/heads/*:refs/remotes/alexeicolin/*
+[remote "julia10br"]
+	url = git@github.com:julia10br/zotero.git
+	fetch = +refs/heads/*:refs/remotes/julia10br/*
+[remote "adam3smith"]
+	url = git@github.com:adam3smith/zotero-1.git
+	fetch = +refs/heads/*:refs/remotes/adam3smith/*
+[remote "lennart0901"]
+	url = git@github.com:lennart0901/zotero.git
+	fetch = +refs/heads/*:refs/remotes/lennart0901/*
+[remote "marnen"]
+	url = git@github.com:marnen/zotero.git
+	fetch = +refs/heads/*:refs/remotes/marnen/*
+[remote "rsnape"]
+	url = git@github.com:rsnape/zotero.git
+	fetch = +refs/heads/*:refs/remotes/rsnape/*
+[remote "emixam"]
+	url = git@github.com:emixam/Cellulose-v2.git
+	fetch = +refs/heads/*:refs/remotes/emixam/*
+[remote "bot3019"]
+	url = git@github.com:bot3019/zotero.git
+	fetch = +refs/heads/*:refs/remotes/bot3019/*
+[remote "robamler"]
+	url = git@github.com:robamler/zotero.git
+	fetch = +refs/heads/*:refs/remotes/robamler/*
+[remote "hatmatter"]
+	url = git@github.com:hatmatter/zotero.git
+	fetch = +refs/heads/*:refs/remotes/hatmatter/*
+[remote "jienus"]
+	url = git@github.com:jienus/zotero.git
+	fetch = +refs/heads/*:refs/remotes/jienus/*
+[remote "wshanks"]
+	url = git@github.com:wshanks/zotero.git
+	fetch = +refs/heads/*:refs/remotes/wshanks/*
+[remote "fefe982"]
+	url = git@github.com:fefe982/zotero.git
+	fetch = +refs/heads/*:refs/remotes/fefe982/*
+[remote "tsclausing"]
+	url = git@github.com:tsclausing/zotero.git
+	fetch = +refs/heads/*:refs/remotes/tsclausing/*
+[remote "Ashley-Wright"]
+	url = git@github.com:Ashley-Wright/zotero.git
+	fetch = +refs/heads/*:refs/remotes/Ashley-Wright/*
+[remote "imclab"]
+	url = git@github.com:imclab/zotero.git
+	fetch = +refs/heads/*:refs/remotes/imclab/*
+[remote "Wagnerp"]
+	url = git@github.com:Wagnerp/zotero.git
+	fetch = +refs/heads/*:refs/remotes/Wagnerp/*
+[remote "ptgolden"]
+	url = git@github.com:ptgolden/zotero.git
+	fetch = +refs/heads/*:refs/remotes/ptgolden/*
+[remote "mythlee"]
+	url = git@github.com:mythlee/zotero.git
+	fetch = +refs/heads/*:refs/remotes/mythlee/*
+[remote "lreznick"]
+	url = git@github.com:lreznick/zotero.git
+	fetch = +refs/heads/*:refs/remotes/lreznick/*
+[remote "marionline"]
+	url = git@github.com:marionline/zotero.git
+	fetch = +refs/heads/*:refs/remotes/marionline/*
+[remote "Tyf0n"]
+	url = git@github.com:Tyf0n/zotero.git
+	fetch = +refs/heads/*:refs/remotes/Tyf0n/*
+[remote "FurongPeng"]
+	url = git@github.com:FurongPeng/zotero.git
+	fetch = +refs/heads/*:refs/remotes/FurongPeng/*
+[remote "smikes"]
+	url = git@github.com:smikes/zotero.git
+	fetch = +refs/heads/*:refs/remotes/smikes/*
+[remote "ebpa"]
+	url = git@github.com:ebpa/zotero.git
+	fetch = +refs/heads/*:refs/remotes/ebpa/*
+[remote "mateolan"]
+	url = git@github.com:mateolan/zotero.git
+	fetch = +refs/heads/*:refs/remotes/mateolan/*
+[remote "GrayHatter"]
+	url = git@github.com:GrayHatter/zotero.git
+	fetch = +refs/heads/*:refs/remotes/GrayHatter/*
+[remote "egh"]
+	url = git@github.com:egh/zotero.git
+	fetch = +refs/heads/*:refs/remotes/egh/*
+[remote "twistedmove"]
+	url = git@github.com:twistedmove/zotero.git
+	fetch = +refs/heads/*:refs/remotes/twistedmove/*
+[remote "waynedev"]
+	url = git@github.com:waynedev/zotero.git
+	fetch = +refs/heads/*:refs/remotes/waynedev/*
+[remote "f-mb"]
+	url = git@github.com:f-mb/zotero.git
+	fetch = +refs/heads/*:refs/remotes/f-mb/*
+[remote "drvinceknight"]
+	url = git@github.com:drvinceknight/zotero.git
+	fetch = +refs/heads/*:refs/remotes/drvinceknight/*
+[remote "mtd91429"]
+	url = git@github.com:mtd91429/zotero.git
+	fetch = +refs/heads/*:refs/remotes/mtd91429/*
+[remote "proquest"]
+	url = git@github.com:proquest/zotero.git
+	fetch = +refs/heads/*:refs/remotes/proquest/*
+[remote "EStrunz"]
+	url = git@github.com:EStrunz/zotero.git
+	fetch = +refs/heads/*:refs/remotes/EStrunz/*
+[remote "holocronweaver"]
+	url = git@github.com:holocronweaver/zotero.git
+	fetch = +refs/heads/*:refs/remotes/holocronweaver/*
+[remote "autra"]
+	url = git@github.com:autra/zotero.git
+	fetch = +refs/heads/*:refs/remotes/autra/*
+[remote "leonzhu"]
+	url = git@github.com:leonzhu/zotero.git
+	fetch = +refs/heads/*:refs/remotes/leonzhu/*
+[remote "akbiswal"]
+	url = git@github.com:akbiswal/zotero.git
+	fetch = +refs/heads/*:refs/remotes/akbiswal/*
+[remote "hoehnp"]
+	url = git@github.com:hoehnp/zotero.git
+	fetch = +refs/heads/*:refs/remotes/hoehnp/*
+[remote "sheilazpy"]
+	url = git@github.com:sheilazpy/zotero.git
+	fetch = +refs/heads/*:refs/remotes/sheilazpy/*
+[remote "eyurtsev"]
+	url = git@github.com:eyurtsev/zotero.git
+	fetch = +refs/heads/*:refs/remotes/eyurtsev/*
+[remote "opengobgt"]
+	url = git@github.com:opengobgt/zotero.git
+	fetch = +refs/heads/*:refs/remotes/opengobgt/*
+[remote "jschultz"]
+	url = git@github.com:jschultz/zotero.git
+	fetch = +refs/heads/*:refs/remotes/jschultz/*
+[remote "jon-freed"]
+	url = git@github.com:jon-freed/zotero.git
+	fetch = +refs/heads/*:refs/remotes/jon-freed/*
+[remote "zuphilip"]
+	url = git@github.com:zuphilip/zotero.git
+	fetch = +refs/heads/*:refs/remotes/zuphilip/*
+[remote "COV-Steve"]
+	url = git@github.com:COV-Steve/zotero.git
+	fetch = +refs/heads/*:refs/remotes/COV-Steve/*
+[remote "camilokawerin"]
+	url = git@github.com:camilokawerin/zotero.git
+	fetch = +refs/heads/*:refs/remotes/camilokawerin/*
+[remote "alexjfecteau"]
+	url = git@github.com:alexjfecteau/zotero.git
+	fetch = +refs/heads/*:refs/remotes/alexjfecteau/*
+[remote "jjatria"]
+	url = git@github.com:jjatria/zotero.git
+	fetch = +refs/heads/*:refs/remotes/jjatria/*
+[remote "shanhaiying"]
+	url = git@github.com:shanhaiying/zotero.git
+	fetch = +refs/heads/*:refs/remotes/shanhaiying/*
+[remote "orima"]
+	url = git@github.com:orima/zotero.git
+	fetch = +refs/heads/*:refs/remotes/orima/*
+[remote "LinuxMercedes"]
+	url = git@github.com:LinuxMercedes/zotero.git
+	fetch = +refs/heads/*:refs/remotes/LinuxMercedes/*
+[remote "QingQYang"]
+	url = git@github.com:QingQYang/zotero.git
+	fetch = +refs/heads/*:refs/remotes/QingQYang/*
+[remote "pchrapka"]
+	url = git@github.com:pchrapka/zotero.git
+	fetch = +refs/heads/*:refs/remotes/pchrapka/*
+[remote "momo-aux"]
+	url = git@github.com:momo-aux/zotero.git
+	fetch = +refs/heads/*:refs/remotes/momo-aux/*
+[remote "Juris-M"]
+	url = git@github.com:Juris-M/zotero.git
+	fetch = +refs/heads/*:refs/remotes/Juris-M/*
+[remote "wbt"]
+	url = git@github.com:wbt/zotero.git
+	fetch = +refs/heads/*:refs/remotes/wbt/*
+[remote "dantigone"]
+	url = git@github.com:dantigone/zotero.git
+	fetch = +refs/heads/*:refs/remotes/dantigone/*
+[remote "rowhit"]
+	url = git@github.com:rowhit/zotero.git
+	fetch = +refs/heads/*:refs/remotes/rowhit/*
+[remote "hyiltiz"]
+	url = git@github.com:hyiltiz/zotero.git
+	fetch = +refs/heads/*:refs/remotes/hyiltiz/*
+[remote "cjzeng"]
+	url = git@github.com:cjzeng/zotero.git
+	fetch = +refs/heads/*:refs/remotes/cjzeng/*
+[remote "flutable"]
+	url = git@github.com:flutable/zotero.git
+	fetch = +refs/heads/*:refs/remotes/flutable/*
+[remote "AlexisMignon"]
+	url = git@github.com:AlexisMignon/zotero.git
+	fetch = +refs/heads/*:refs/remotes/AlexisMignon/*
+[remote "marckl67"]
+	url = git@github.com:marckl67/zotero.git
+	fetch = +refs/heads/*:refs/remotes/marckl67/*
+[remote "adunning"]
+	url = git@github.com:adunning/zotero.git
+	fetch = +refs/heads/*:refs/remotes/adunning/*
+[remote "AndrewMicallef"]
+	url = git@github.com:AndrewMicallef/zotero.git
+	fetch = +refs/heads/*:refs/remotes/AndrewMicallef/*
+[remote "victorgirotto-zz"]
+	url = git@github.com:victorgirotto-zz/zotero.git
+	fetch = +refs/heads/*:refs/remotes/victorgirotto-zz/*
+[remote "billjordan"]
+	url = git@github.com:billjordan/zotero.git
+	fetch = +refs/heads/*:refs/remotes/billjordan/*
+[remote "simpzan"]
+	url = git@github.com:simpzan/zotero.git
+	fetch = +refs/heads/*:refs/remotes/simpzan/*
+[remote "my0auth"]
+	url = git@github.com:my0auth/zotero.git
+	fetch = +refs/heads/*:refs/remotes/my0auth/*
+[remote "zhoubecky"]
+	url = git@github.com:zhoubecky/zotero.git
+	fetch = +refs/heads/*:refs/remotes/zhoubecky/*
+[remote "zqliang"]
+	url = git@github.com:zqliang/zotero.git
+	fetch = +refs/heads/*:refs/remotes/zqliang/*
+[remote "charlesname2"]
+	url = git@github.com:charlesname2/zotero.git
+	fetch = +refs/heads/*:refs/remotes/charlesname2/*
+[remote "kalagau"]
+	url = git@github.com:kalagau/zotero.git
+	fetch = +refs/heads/*:refs/remotes/kalagau/*
+[remote "AntonioLok"]
+	url = git@github.com:AntonioLok/zotero.git
+	fetch = +refs/heads/*:refs/remotes/AntonioLok/*
+[remote "skaush"]
+	url = git@github.com:skaush/zotero-1.git
+	fetch = +refs/heads/*:refs/remotes/skaush/*
+[remote "CrazyKsv"]
+	url = git@github.com:CrazyKsv/zotero.git
+	fetch = +refs/heads/*:refs/remotes/CrazyKsv/*
+[remote "kewarthm"]
+	url = git@github.com:kewarthm/zotero.git
+	fetch = +refs/heads/*:refs/remotes/kewarthm/*
+[remote "pauline-ng"]
+	url = git@github.com:pauline-ng/factify_firefox_extension_zotero.git
+	fetch = +refs/heads/*:refs/remotes/pauline-ng/*
+[remote "entelesis"]
+	url = git@github.com:entelesis/zotero.git
+	fetch = +refs/heads/*:refs/remotes/entelesis/*
+[remote "LetschM"]
+	url = git@github.com:LetschM/zotero.git
+	fetch = +refs/heads/*:refs/remotes/LetschM/*
+[remote "adomasven"]
+	url = git@github.com:adomasven/zotero.git
+	fetch = +refs/heads/*:refs/remotes/adomasven/*
+[remote "goldroom"]
+	url = git@github.com:goldroom/zotero.git
+	fetch = +refs/heads/*:refs/remotes/goldroom/*
+[remote "fwahl711"]
+	url = git@github.com:fwahl711/zotero.git
+	fetch = +refs/heads/*:refs/remotes/fwahl711/*
+[remote "yongzhez"]
+	url = git@github.com:yongzhez/zotero.git
+	fetch = +refs/heads/*:refs/remotes/yongzhez/*
+[remote "dissemin"]
+	url = git@github.com:dissemin/zotero.git
+	fetch = +refs/heads/*:refs/remotes/dissemin/*
+[remote "DanielShie"]
+	url = git@github.com:DanielShie/zotero.git
+	fetch = +refs/heads/*:refs/remotes/DanielShie/*
+[remote "eseifert"]
+	url = git@github.com:eseifert/zotero.git
+	fetch = +refs/heads/*:refs/remotes/eseifert/*
+[remote "project-renard-survey"]
+	url = git@github.com:project-renard-survey/zotero.git
+	fetch = +refs/heads/*:refs/remotes/project-renard-survey/*
+[remote "pklampros"]
+	url = git@github.com:pklampros/zotero.git
+	fetch = +refs/heads/*:refs/remotes/pklampros/*
+[remote "whistlefall"]
+	url = git@github.com:whistlefall/zotero.git
+	fetch = +refs/heads/*:refs/remotes/whistlefall/*
+[remote "diegopenhanut"]
+	url = git@github.com:diegopenhanut/zotero.git
+	fetch = +refs/heads/*:refs/remotes/diegopenhanut/*
+[remote "odnodn"]
+	url = git@github.com:odnodn/zotero.git
+	fetch = +refs/heads/*:refs/remotes/odnodn/*
+[remote "jeff-kerr"]
+	url = git@github.com:jeff-kerr/zotero.git
+	fetch = +refs/heads/*:refs/remotes/jeff-kerr/*
+[remote "jlegewie"]
+	url = git@github.com:jlegewie/zotero.git
+	fetch = +refs/heads/*:refs/remotes/jlegewie/*
+[remote "kba"]
+	url = git@github.com:kba/zotero.git
+	fetch = +refs/heads/*:refs/remotes/kba/*
+[remote "ralight"]
+	url = git@github.com:ralight/zotero.git
+	fetch = +refs/heads/*:refs/remotes/ralight/*
+[remote "socheres"]
+	url = git@github.com:socheres/zotero.git
+	fetch = +refs/heads/*:refs/remotes/socheres/*
+[remote "kazarmy"]
+	url = git@github.com:kazarmy/zotero.git
+	fetch = +refs/heads/*:refs/remotes/kazarmy/*
+[remote "sreenadhp"]
+	url = git@github.com:sreenadhp/zotero.git
+	fetch = +refs/heads/*:refs/remotes/sreenadhp/*
+[remote "markdoerr"]
+	url = git@github.com:markdoerr/zotero.git
+	fetch = +refs/heads/*:refs/remotes/markdoerr/*
+[remote "tnajdek"]
+	url = git@github.com:tnajdek/zotero.git
+	fetch = +refs/heads/*:refs/remotes/tnajdek/*
+[remote "linwang741"]
+	url = git@github.com:linwang741/zotero.git
+	fetch = +refs/heads/*:refs/remotes/linwang741/*
+[remote "awesome-archive"]
+	url = git@github.com:awesome-archive/zotero.git
+	fetch = +refs/heads/*:refs/remotes/awesome-archive/*
+[remote "AndyDearden"]
+	url = git@github.com:AndyDearden/zotero.git
+	fetch = +refs/heads/*:refs/remotes/AndyDearden/*
+[remote "golflv100"]
+	url = git@github.com:golflv100/zotero.git
+	fetch = +refs/heads/*:refs/remotes/golflv100/*
+[remote "datadavev"]
+	url = git@github.com:datadavev/zotero.git
+	fetch = +refs/heads/*:refs/remotes/datadavev/*
+[remote "baig"]
+	url = git@github.com:baig/zotero.git
+	fetch = +refs/heads/*:refs/remotes/baig/*
+[remote "anukat2015"]
+	url = git@github.com:anukat2015/zotero.git
+	fetch = +refs/heads/*:refs/remotes/anukat2015/*
+[remote "hans"]
+	url = git@github.com:hans/zotero.git
+	fetch = +refs/heads/*:refs/remotes/hans/*
+[remote "assoum82"]
+	url = git@github.com:assoum82/zotero.git
+	fetch = +refs/heads/*:refs/remotes/assoum82/*
+[remote "enfoTek"]
+	url = git@github.com:enfoTek/zotero.git
+	fetch = +refs/heads/*:refs/remotes/enfoTek/*
+[remote "kohalmykristof"]
+	url = git@github.com:kohalmykristof/zotero.git
+	fetch = +refs/heads/*:refs/remotes/kohalmykristof/*
+[remote "ChristianFrisson"]
+	url = git@github.com:ChristianFrisson/zotero.git
+	fetch = +refs/heads/*:refs/remotes/ChristianFrisson/*
+[remote "cstroe"]
+	url = git@github.com:cstroe/zotero.git
+	fetch = +refs/heads/*:refs/remotes/cstroe/*
+[remote "hkejigu"]
+	url = git@github.com:hkejigu/zotero.git
+	fetch = +refs/heads/*:refs/remotes/hkejigu/*
+[remote "philastrophist"]
+	url = git@github.com:philastrophist/zotero.git
+	fetch = +refs/heads/*:refs/remotes/philastrophist/*
+[remote "janbaykara"]
+	url = git@github.com:janbaykara/zotero.git
+	fetch = +refs/heads/*:refs/remotes/janbaykara/*
+[remote "kalagar"]
+	url = git@github.com:kalagar/zotero.git
+	fetch = +refs/heads/*:refs/remotes/kalagar/*
+[remote "thodison"]
+	url = git@github.com:thodison/zotero.git
+	fetch = +refs/heads/*:refs/remotes/thodison/*
+[remote "randyli"]
+	url = git@github.com:randyli/zotero.git
+	fetch = +refs/heads/*:refs/remotes/randyli/*
+[remote "libora"]
+	url = git@github.com:libora/zotero.git
+	fetch = +refs/heads/*:refs/remotes/libora/*
+[remote "jasonzou"]
+	url = git@github.com:jasonzou/zotero.git
+	fetch = +refs/heads/*:refs/remotes/jasonzou/*
+[remote "dingsabc"]
+	url = git@github.com:dingsabc/zotero.git
+	fetch = +refs/heads/*:refs/remotes/dingsabc/*
+[remote "bluetyson"]
+	url = git@github.com:bluetyson/zotero.git
+	fetch = +refs/heads/*:refs/remotes/bluetyson/*
+[remote "brierjon"]
+	url = git@github.com:brierjon/zotero.git
+	fetch = +refs/heads/*:refs/remotes/brierjon/*
+[remote "febrezo"]
+	url = git@github.com:febrezo/zotero.git
+	fetch = +refs/heads/*:refs/remotes/febrezo/*
+[remote "rodrigoesborges"]
+	url = git@github.com:rodrigoesborges/zotero.git
+	fetch = +refs/heads/*:refs/remotes/rodrigoesborges/*
+[remote "mystyc"]
+	url = git@github.com:mystyc/zotero.git
+	fetch = +refs/heads/*:refs/remotes/mystyc/*
+[remote "luwei14"]
+	url = git@github.com:luwei14/zotero.git
+	fetch = +refs/heads/*:refs/remotes/luwei14/*
+[remote "wizzdmorg"]
+	url = git@github.com:wizzdmorg/zotero.git
+	fetch = +refs/heads/*:refs/remotes/wizzdmorg/*
+[remote "lzim"]
+	url = git@github.com:lzim/zotero.git
+	fetch = +refs/heads/*:refs/remotes/lzim/*
+[remote "Carelvd"]
+	url = git@github.com:Carelvd/zotero.git
+	fetch = +refs/heads/*:refs/remotes/Carelvd/*
+[remote "hbradleyiii"]
+	url = git@github.com:hbradleyiii/zotero.git
+	fetch = +refs/heads/*:refs/remotes/hbradleyiii/*
+[remote "Emic37"]
+	url = git@github.com:Emic37/zotero.git
+	fetch = +refs/heads/*:refs/remotes/Emic37/*
+[remote "alecshaw"]
+	url = git@github.com:alecshaw/zotero.git
+	fetch = +refs/heads/*:refs/remotes/alecshaw/*
+[remote "psisquared2"]
+	url = git@github.com:psisquared2/zotero.git
+	fetch = +refs/heads/*:refs/remotes/psisquared2/*
+[remote "tmykkanen"]
+	url = git@github.com:tmykkanen/zotero.git
+	fetch = +refs/heads/*:refs/remotes/tmykkanen/*
+[remote "SagaFav"]
+	url = git@github.com:SagaFav/zotero.git
+	fetch = +refs/heads/*:refs/remotes/SagaFav/*
+[remote "krishna2nd"]
+	url = git@github.com:krishna2nd/zotero.git
+	fetch = +refs/heads/*:refs/remotes/krishna2nd/*
+[remote "Nvlawachan"]
+	url = git@github.com:Nvlawachan/zotero.git
+	fetch = +refs/heads/*:refs/remotes/Nvlawachan/*
+[remote "StandardLaw"]
+	url = git@github.com:StandardLaw/zotero.git
+	fetch = +refs/heads/*:refs/remotes/StandardLaw/*
+[remote "bjzhangyong"]
+	url = git@github.com:bjzhangyong/zotero.git
+	fetch = +refs/heads/*:refs/remotes/bjzhangyong/*
+[remote "isentropic"]
+	url = git@github.com:isentropic/zotero.git
+	fetch = +refs/heads/*:refs/remotes/isentropic/*
+[remote "ehhc"]
+	url = git@github.com:ehhc/zotero.git
+	fetch = +refs/heads/*:refs/remotes/ehhc/*
+[remote "saccohuo"]
+	url = git@github.com:saccohuo/zotero.git
+	fetch = +refs/heads/*:refs/remotes/saccohuo/*
+[remote "ewa"]
+	url = git@github.com:ewa/zotero.git
+	fetch = +refs/heads/*:refs/remotes/ewa/*
+[remote "italoadler"]
+	url = git@github.com:italoadler/zotero.git
+	fetch = +refs/heads/*:refs/remotes/italoadler/*
+[remote "rigelfalcon"]
+	url = git@github.com:rigelfalcon/zotero.git
+	fetch = +refs/heads/*:refs/remotes/rigelfalcon/*
+[remote "kiranscaria"]
+	url = git@github.com:kiranscaria/zotero.git
+	fetch = +refs/heads/*:refs/remotes/kiranscaria/*
+[remote "tobiasdiez"]
+	url = git@github.com:tobiasdiez/zotero.git
+	fetch = +refs/heads/*:refs/remotes/tobiasdiez/*
+[remote "Pandinosaurus"]
+	url = git@github.com:Pandinosaurus/zotero.git
+	fetch = +refs/heads/*:refs/remotes/Pandinosaurus/*
+[remote "Alex-Linhares"]
+	url = git@github.com:Alex-Linhares/zotero.git
+	fetch = +refs/heads/*:refs/remotes/Alex-Linhares/*
+[remote "devtoolch"]
+	url = git@github.com:devtoolch/zotero.git
+	fetch = +refs/heads/*:refs/remotes/devtoolch/*
+[remote "paris0120"]
+	url = git@github.com:paris0120/zotero.git
+	fetch = +refs/heads/*:refs/remotes/paris0120/*
+[remote "remocrevo"]
+	url = git@github.com:remocrevo/zotero.git
+	fetch = +refs/heads/*:refs/remotes/remocrevo/*
+[remote "adityavs"]
+	url = git@github.com:adityavs/zotero.git
+	fetch = +refs/heads/*:refs/remotes/adityavs/*
+[remote "Genix-Greysh"]
+	url = git@github.com:Genix-Greysh/zotero.git
+	fetch = +refs/heads/*:refs/remotes/Genix-Greysh/*
+[remote "Eothred"]
+	url = git@github.com:Eothred/zotero.git
+	fetch = +refs/heads/*:refs/remotes/Eothred/*
+[remote "daggmano"]
+	url = git@github.com:daggmano/zotero.git
+	fetch = +refs/heads/*:refs/remotes/daggmano/*
+[remote "inukshuk"]
+	url = git@github.com:inukshuk/zotero.git
+	fetch = +refs/heads/*:refs/remotes/inukshuk/*
