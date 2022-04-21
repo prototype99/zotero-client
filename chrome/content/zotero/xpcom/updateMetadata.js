@@ -33,17 +33,30 @@ Zotero.UpdateMetadata = new function () {
 		onInit() {
 			_update();
 		},
-		onToggle(itemID, fieldName) {
+		async onToggle(itemID, fieldName) {
 			let row = _rows.find(row => row.itemID === itemID);
+			let item = await Zotero.Items.getAsync(row.itemID);
 			if (row) {
 				// Toggle all if no field is passed
 				if (!fieldName) {
 					let hasEnabledFields = row.fields.find(field => !field.isDisabled);
 					row.fields.forEach(field => field.isDisabled = hasEnabledFields);
-				}
-				else {
+				} else {
+					let supportedFieldNames = _supportedFieldNamesMap(item);
 					let field = row.fields.find(x => x.fieldName === fieldName);
 					field.isDisabled = !field.isDisabled;
+					if (_isItemTypeChanged(row) && field.fieldName === 'extra') {
+						// See if extra fields have a home now
+						item.migrateExtraFields();
+						// Move unsupported fields out
+						let newExtra = item.getField('extra');
+						for (let extraField of row.fields) {
+							if (!supportedFieldNames.includes(extraField.fieldName)) {
+								newExtra = new Map([...newExtra, extraField]);
+							}
+						}
+						item.setField(field.fieldName, newExtra);
+					}
 				}
 			}
 			_update();
@@ -690,6 +703,16 @@ Zotero.UpdateMetadata = new function () {
 	}
 
 	/**
+	 * Return the supported  field names for an item's type
+	 * @param {Zotero.Item} item
+	 * @return {fieldName[]}
+	 */
+	function _supportedFieldNamesMap(item) {
+		let supportedFieldNames = Zotero.ItemFields.getItemTypeFields(item.itemTypeID);
+		return supportedFieldNames.map(x => Zotero.ItemFields.getName(x));
+	}
+
+	/**
 	 * Apply accepted fields to existing items
 	 * @returns {Promise}
 	 * @private
@@ -717,8 +740,7 @@ Zotero.UpdateMetadata = new function () {
 			]);
 		}
 
-		let supportedFieldNames = Zotero.ItemFields.getItemTypeFields(item.itemTypeID);
-		supportedFieldNames = supportedFieldNames.map(x => Zotero.ItemFields.getName(x));
+		let supportedFieldNames = _supportedFieldNamesMap(item);
 
 		for (let field of row.fields) {
 			if (!field.isDisabled && supportedFieldNames.includes(field.fieldName)) {
