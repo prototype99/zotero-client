@@ -31,11 +31,11 @@
 	url = https://github.com/gildas-lormeau/SingleFile.git
 [submodule "pdf-reader"]
 	path = pdf-reader
-	url = https://github.com/zotero/pdf-reader.git
+	url = https://github.com/prototype99/pdf-reader.git
 	branch = master
 [submodule "pdf-worker"]
 	path = pdf-worker
-	url = https://github.com/zotero/pdf-worker.git
+	url = https://github.com/prototype99/pdf-worker.git
 	branch = master
 [submodule "note-editor"]
 	path = note-editor
